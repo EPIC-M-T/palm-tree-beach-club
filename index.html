@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>EPIC Models | Palm Tree Beach Club Proposal — The Talent Bible</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Swiper.js -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <!-- Anime.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <!-- Tippy.js -->
+  <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css" />
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
+  <!-- Lottie Player -->
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.0/dist/lottie-player.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background-color: #0a0c0f; overflow-x: hidden; scroll-behavior: smooth; }
+    .glass-panel { background: rgba(10, 12, 15, 0.65); backdrop-filter: blur(12px); border: 1px solid rgba(212, 175, 55, 0.25); border-radius: 2rem; box-shadow: 0 20px 40px -12px rgba(0,0,0,0.5), 0 0 0 0.5px rgba(212, 175, 55, 0.2) inset; }
+    .gold-glow { text-shadow: 0 0 12px rgba(212, 175, 55, 0.5); }
+    .btn-gold { background: linear-gradient(135deg, #d4af37 0%, #b88b2c 100%); box-shadow: 0 4px 15px rgba(212,175,55,0.3); transition: all 0.3s ease; }
+    .btn-gold:hover { transform: scale(1.02); box-shadow: 0 8px 25px rgba(212,175,55,0.5); }
+    /* 3D Flip Card */
+    .flip-card { background: transparent; width: 100%; height: 500px; perspective: 1500px; cursor: pointer; }
+    .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.23,1,0.32,1); transform-style: preserve-3d; border-radius: 1.5rem; }
+    .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+    .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 1.5rem; overflow: hidden; box-shadow: 0 25px 40px -12px black; }
+    .flip-card-front { background: #14171c; background-size: cover; background-position: center; }
+    .flip-card-back { background: #0e1117; transform: rotateY(180deg); padding: 1rem; display: flex; flex-direction: column; justify-content: flex-end; background-size: cover; background-position: center; }
+    /* TRIPLE CARD REVEAL SYSTEM - FIXED VISIBILITY */
+    .triple-scene {
+      position: relative;
+      width: 100%;
+      max-width: 1300px;
+      margin: 0 auto;
+      height: 560px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .triple-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+    /* Base card style - now using flex positioning instead of absolute */
+    .reveal-card {
+      width: 320px;
+      height: 500px;
+      border-radius: 24px;
+      background: #0e1117;
+      border: 1px solid rgba(212,175,55,0.4);
+      box-shadow: 0 30px 50px rgba(0,0,0,0.6);
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.34, 1.2, 0.64, 1);
+      opacity: 0;
+      transform: scale(0.9) translateY(30px);
+      pointer-events: none;
+      backdrop-filter: blur(4px);
+      flex-shrink: 0;
+    }
+    .reveal-card.active {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      pointer-events: auto;
+    }
+    /* Center card gets highlight */
+    .reveal-card.center {
+      border: 2px solid #d4af37;
+      box-shadow: 0 40px 70px rgba(0,0,0,0.7);
+      transform: scale(1.02) translateY(-5px);
+      z-index: 10;
+    }
+    .reveal-card.center.active {
+      transform: scale(1.02) translateY(-5px);
+    }
+    .reveal-card.left { z-index: 5; }
+    .reveal-card.right { z-index: 5; }
+    /* content styling inside reveal cards */
+    .reveal-card .card-media { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .reveal-card .card-video { width: 100%; height: 100%; object-fit: cover; }
+    .stats-bio-content { padding: 1.5rem; display: flex; flex-direction: column; height: 100%; background: linear-gradient(145deg, #11151e, #0a0c12); color: white; overflow-y: auto; }
+    .stats-bio-content h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 0.5rem; color: #d4af37; }
+    .stats-grid { margin-top: 1rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    .stat-item { border-bottom: 1px solid rgba(212,175,55,0.3); padding: 0.4rem 0; }
+    .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #aaa; }
+    .stat-value { font-weight: 600; font-size: 1rem; }
+    .bio-blurb { margin-top: 1.2rem; font-size: 0.85rem; line-height: 1.4; color: #ccc; border-top: 1px solid rgba(212,175,55,0.3); padding-top: 1rem; }
+    .close-reveal-btn {
+      position: absolute;
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #d4af37;
+      color: black;
+      border: none;
+      border-radius: 40px;
+      padding: 12px 32px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 30;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.3s;
+      font-family: monospace;
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+    .close-reveal-btn.visible { opacity: 1; pointer-events: auto; }
+    .close-reveal-btn:hover { transform: translateX(-50%) scale(1.05); background: #f0e050; }
+    /* overlay darken when expanded */
+    .triple-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 90;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s;
+    }
+    .triple-overlay.active { opacity: 1; visibility: visible; }
+    /* Fixed reveal wrapper positioning */
+    .reveal-wrapper {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 200;
+      width: 90%;
+      max-width: 1200px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .reveal-wrapper.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    /* swiper adjustments */
+    .swiper-slide { transition: transform 0.3s ease; }
+    .social-swiper .swiper-wrapper { transition-timing-function: linear; }
+    .video-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(12px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+    .video-modal.active { opacity: 1; visibility: visible; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #1e1f24; }
+    ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 10px; }
+    /* mobile responsiveness */
+    @media (max-width: 1100px) {
+      .reveal-card { width: 280px; height: 460px; }
+      .triple-scene { height: 520px; }
+      .stats-bio-content h3 { font-size: 1.5rem; }
+    }
+    @media (max-width: 900px) {
+      .reveal-card { width: 240px; height: 420px; }
+      .triple-scene { height: 480px; }
+      .triple-container { gap: 12px; }
+    }
+    @media (max-width: 780px) {
+      .reveal-card { width: 220px; height: 400px; }
+      .triple-scene { height: 440px; }
+      .stats-bio-content { padding: 1rem; }
+      .stats-grid { gap: 0.5rem; }
+      .close-reveal-btn { bottom: -50px; padding: 8px 24px; font-size: 12px; }
+    }
+    @media (max-width: 680px) {
+      .triple-container { gap: 8px; }
+      .reveal-card { width: 200px; height: 360px; }
+      .triple-scene { height: 400px; }
+    }
+  </style>
+</head>
+<body class="bg-black text-white">
+
+  <!-- Floating Contact Button -->
+  <div class="fixed bottom-8 right-6 z-50">
+    <button id="contactFloatBtn" class="bg-gradient-to-r from-amber-500 to-yellow-600 p-4 rounded-full shadow-2xl hover:scale-110 transition-all duration-300 group">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Contact Modal -->
+  <div id="contactModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md transition-all duration-500 opacity-0 invisible">
+    <div class="glass-panel w-[90%] max-w-md p-8 rounded-3xl border border-amber-500/40 text-center transform scale-95 transition-all duration-300">
+      <h3 class="text-3xl font-bold font-['Playfair_Display'] text-amber-400 mb-2">Book the Dream Team</h3>
+      <p class="text-gray-300 mb-6">Let's bring the heat to Palm Tree Beach Club.</p>
+      <input type="text" placeholder="Your name" class="w-full bg-white/10 border border-white/20 rounded-xl p-3 mb-3 text-white focus:outline-none focus:border-amber-400">
+      <input type="email" placeholder="Email address" class="w-full bg-white/10 border border-white/20 rounded-xl p-3 mb-3 text-white focus:outline-none focus:border-amber-400">
+      <textarea rows="2" placeholder="Tell us about your event dates..." class="w-full bg-white/10 border border-white/20 rounded-xl p-3 mb-5 text-white focus:outline-none"></textarea>
+      <button class="btn-gold w-full py-3 rounded-xl font-bold text-black tracking-wide">Send Pitch Request</button>
+      <button id="closeModalBtn" class="mt-4 text-sm text-gray-400 hover:text-white">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Lottie Ambient -->
+  <div class="fixed bottom-0 left-0 w-full h-full pointer-events-none z-0 opacity-20">
+    <lottie-player src="https://assets9.lottiefiles.com/packages/lf20_hd7abqpu.json" background="transparent" speed="0.6" loop autoplay></lottie-player>
+  </div>
+
+  <!-- HERO -->
+  <section class="relative h-screen w-full overflow-hidden">
+    <video autoplay muted loop playsinline class="absolute top-0 left-0 w-full h-full object-cover z-0">
+      <source src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/68955de9589b44b560b89ac9.mp4" type="video/mp4">
+    </video>
+    <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/70 z-10"></div>
+    <div class="relative z-20 flex flex-col items-center justify-center h-full text-center px-4">
+      <img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c0a7729bd13917730b9bba.svg" alt="EPIC Models Logo" class="w-56 md:w-80 mb-6 drop-shadow-2xl opacity-0 transform -translate-y-10" id="heroLogo">
+      <h1 id="heroHeadline" class="text-4xl md:text-7xl lg:text-8xl font-bold tracking-tight font-['Playfair_Display'] opacity-0">
+        <span class="text-white">EPIC meets</span><br>
+        <span class="text-amber-400 gold-glow">Palm Tree Beach Club</span>
+      </h1>
+      <p class="text-lg md:text-2xl max-w-2xl mt-6 text-white/80 backdrop-blur-sm px-4 py-2 rounded-full opacity-0" id="heroSub">The ultimate poolside alliance • Summer Wed–Sun • Book the icons</p>
+      <div class="mt-10 flex gap-5 opacity-0" id="heroBtn"><a href="#talent" class="btn-gold px-8 py-3 rounded-full font-bold text-black tracking-wide">Discover Talent</a></div>
+    </div>
+  </section>
+
+  <!-- ELITE AMBASSADORS with TRIPLE CARD REVEAL -->
+  <section id="talent" class="py-28 px-4 md:px-8 bg-gradient-to-b from-black via-[#0f1219] to-black relative z-10">
+    <div class="max-w-7xl mx-auto text-center mb-16">
+      <span class="text-amber-400 tracking-widest text-sm font-semibold">THE ROSTER</span>
+      <h2 class="text-5xl md:text-7xl font-['Playfair_Display'] mt-2">Elite Ambassadors</h2>
+      <div class="w-24 h-1 bg-amber-500 mx-auto mt-4 rounded-full"></div>
+    </div>
+    <div class="swiper talentSwiper !overflow-visible relative">
+      <div class="swiper-wrapper" id="talentSwiperWrapper"></div>
+      <div class="swiper-pagination !bottom-0"></div>
+      <div class="swiper-button-next !text-amber-400"></div>
+      <div class="swiper-button-prev !text-amber-400"></div>
+    </div>
+  </section>
+
+  <!-- Fixed Reveal Wrapper (centered on screen) -->
+  <div class="reveal-wrapper" id="revealWrapper">
+    <div id="dynamicTripleScene"></div>
+  </div>
+  <div class="triple-overlay" id="tripleOverlay"></div>
+
+  <!-- Experience Reels -->
+  <section class="py-24 px-4 bg-black/90 relative z-10">
+    <div class="max-w-6xl mx-auto text-center mb-12">
+      <span class="text-amber-400 tracking-widest">EXPERIENCE REELS</span>
+      <h2 class="text-4xl md:text-6xl font-['Playfair_Display']">Moments That Move</h2>
+    </div>
+    <div class="flex flex-wrap justify-center gap-8">
+      <div class="reel-thumb cursor-pointer group" data-video="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/68955de9589b44b560b89ac9.mp4">
+        <div class="w-80 h-56 rounded-2xl overflow-hidden relative shadow-xl"><img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef1de7f24c62bc83c2737.jpeg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500"><div class="absolute inset-0 bg-black/40 flex items-center justify-center"><div class="bg-amber-500 rounded-full p-3"><svg class="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div></div><p class="mt-3 text-center font-semibold">Poolside Energy Reel</p>
+      </div>
+      <div class="reel-thumb cursor-pointer group" data-video="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/68955de9589b44b560b89ac9.mp4">
+        <div class="w-80 h-56 rounded-2xl overflow-hidden relative shadow-xl"><img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef1de7f24c62bc83c2737.jpeg" class="w-full h-full object-cover group-hover:scale-110 transition"><div class="absolute inset-0 bg-black/40 flex items-center justify-center"><div class="bg-amber-500 rounded-full p-3"><svg class="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div></div><p class="mt-3 text-center font-semibold">VIP Host Moments</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL WALL -->
+  <section class="py-20 overflow-hidden relative">
+    <div class="text-center mb-8"><span class="text-amber-400 text-sm">#EPICxPALMTREE</span><h2 class="text-4xl font-bold">Lifestyle Carousel</h2></div>
+    <div class="swiper socialSwiper w-full"><div class="swiper-wrapper"><div class="swiper-slide w-80"><img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef1de7f24c62bc83c2737.jpeg" class="w-80 h-96 object-cover rounded-2xl shadow-2xl"></div><div class="swiper-slide w-80"><img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef1de023a380b92923a95.png" class="w-80 h-96 object-cover rounded-2xl"></div><div class="swiper-slide w-80"><img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef265023a38a0e1923b70.jpeg" class="w-80 h-96 object-cover rounded-2xl"></div><div class="swiper-slide w-80"><img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef1de023a384c60923a92.jpeg" class="w-80 h-96 object-cover rounded-2xl"></div></div></div>
+  </section>
+
+  <div id="videoModal" class="video-modal"><div class="relative w-11/12 md:w-3/4 lg:w-2/3 bg-black rounded-2xl overflow-hidden shadow-2xl"><video id="modalVideo" controls autoplay class="w-full h-auto max-h-[80vh]"></video><button id="closeVideo" class="absolute top-3 right-5 text-white text-3xl">&times;</button></div></div>
+
+  <script>
+    // Model Data (7 models)
+    const modelsData = [
+      { name: "Sofia Reign", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/6880380e8ffd9e850fb6da26.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef265023a38a0e1923b70.jpeg", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/68955de9589b44b560b89ac9.mp4", height: "5'10\"", bust: "34B", waist: "24", hips: "35", shoe: "7.5", bio: "Runway energy meets poolside charisma. 5+ years luxury brand ambassador. Featured in Harper's Bazaar." },
+      { name: "Mateo Cruz", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/6880380f9a702e50080c12cd.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef1de023a380b92923a95.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/68955de9589b44b560b89ac9.mp4", height: "6'2\"", bust: "40", waist: "32", hips: "38", shoe: "11", bio: "The ultimate host & high-energy vibe. International DJ and event MC. Resident at Hakkasan." },
+      { name: "Isla Voss", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/6880380e8ffd9e850fb6da26.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef1de023a384c60923a92.jpeg", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/68955de9589b44b560b89ac9.mp4", height: "5'8\"", bust: "32B", waist: "23", hips: "34", shoe: "8", bio: "Tropical goddess, 8+ years luxury events. Featured in Vogue Mexico and Sports Illustrated." },
+      { name: "Damon Knight", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/6880380f9a702e50080c12cd.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef265023a38a0e1923b70.jpeg", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/68955de9589b44b560b89ac9.mp4", height: "6'0\"", bust: "40", waist: "32", hips: "39", shoe: "10.5", bio: "Miami to Vegas, party igniter. Signature high-energy bottle service host. Brand ambassador for Grey Goose." },
+      { name: "Lena Costa", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/6880380e8ffd9e850fb6da26.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef1de023a380b92923a95.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/68955de9589b44b560b89ac9.mp4", height: "5'9\"", bust: "34C", waist: "24", hips: "35", shoe: "8.5", bio: "SI Swimsuit alum, infectious smile. Brand ambassador for premium spirits and luxury resort wear." },
+      { name: "Zara Kole", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/6880380f9a702e50080c12cd.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef1de023a384c60923a92.jpeg", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/68955de9589b44b560b89ac9.mp4", height: "5'7\"", bust: "32C", waist: "24", hips: "34", shoe: "7", bio: "Global DJ & model fusion. Residency at XS Nightclub. Featured in DJ Mag Top 100." },
+      { name: "Jasper Moon", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/6880380e8ffd9e850fb6da26.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef265023a38a0e1923b70.jpeg", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/68955de9589b44b560b89ac9.mp4", height: "6'1\"", bust: "42", waist: "31", hips: "40", shoe: "12", bio: "Male cover model, luxury brand ambassador. Featured in GQ, Esquire, and campaigns for Versace." }
+    ];
+
+    // Build Swiper slides
+    const wrapper = document.getElementById('talentSwiperWrapper');
+    modelsData.forEach((model, idx) => {
+      const slideDiv = document.createElement('div');
+      slideDiv.className = 'swiper-slide';
+      slideDiv.setAttribute('data-model-idx', idx);
+      slideDiv.innerHTML = `
+        <div class="flip-card" data-idx="${idx}">
+          <div class="flip-card-inner">
+            <div class="flip-card-front" style="background-image: url('${model.headshot}'); background-size: cover; background-position: center;"></div>
+            <div class="flip-card-back" style="background-image: linear-gradient(0deg, rgba(0,0,0,0.8), rgba(0,0,0,0.3)), url('${model.fullBody}'); background-size: cover; background-position: center;">
+              <div class="bg-black/60 backdrop-blur-md p-4 rounded-2xl w-full">
+                <h3 class="text-2xl font-bold">${model.name}</h3>
+                <p class="text-sm text-amber-300">${model.bio.substring(0, 55)}...</p>
+                <div class="flex gap-3 mt-2 text-xs font-mono"><span class="stat-tip" data-tip="Height: ${model.height} | ${model.bust} | Waist: ${model.waist} | Hips: ${model.hips}">📏 Quick Stats</span><span>👠 ${model.shoe}</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      wrapper.appendChild(slideDiv);
+    });
+
+    // Triple reveal engine with auto-centering
+    let activeTriple = null;
+    const tripleOverlay = document.getElementById('tripleOverlay');
+    const revealWrapper = document.getElementById('revealWrapper');
+    const tripleSceneContainer = document.getElementById('dynamicTripleScene');
+
+    function closeTripleReveal() {
+      if (!activeTriple) return;
+      tripleOverlay.classList.remove('active');
+      revealWrapper.classList.remove('active');
+      tripleSceneContainer.innerHTML = '';
+      activeTriple = null;
+      document.body.style.overflow = '';
+    }
+
+    function openTripleReveal(modelIdx, cardElement) {
+      if (activeTriple) closeTripleReveal();
+      const model = modelsData[modelIdx];
+      
+      // Create the triple card layout using flexbox (no absolute positioning issues)
+      const sceneDiv = document.createElement('div');
+      sceneDiv.className = 'triple-scene';
+      sceneDiv.innerHTML = `
+        <div class="triple-container">
+          <div class="reveal-card left" id="leftCard">
+            <img class="card-media" src="${model.fullBody}" alt="${model.name} full body">
+          </div>
+          <div class="reveal-card center" id="centerCard">
+            <video class="card-video" autoplay loop muted playsinline>
+              <source src="${model.videoUrl}" type="video/mp4">
+            </video>
+          </div>
+          <div class="reveal-card right" id="rightCard">
+            <div class="stats-bio-content">
+              <h3>${model.name}</h3>
+              <div class="stats-grid">
+                <div class="stat-item"><div class="stat-label">Height</div><div class="stat-value">${model.height}</div></div>
+                <div class="stat-item"><div class="stat-label">Bust/Chest</div><div class="stat-value">${model.bust}</div></div>
+                <div class="stat-item"><div class="stat-label">Waist</div><div class="stat-value">${model.waist}</div></div>
+                <div class="stat-item"><div class="stat-label">Hips</div><div class="stat-value">${model.hips}</div></div>
+                <div class="stat-item"><div class="stat-label">Shoe</div><div class="stat-value">${model.shoe}</div></div>
+              </div>
+              <div class="bio-blurb">${model.bio}</div>
+            </div>
+          </div>
+        </div>
+        <button class="close-reveal-btn" id="closeRevealBtn">✕ CLOSE GALLERY</button>
+      `;
+      
+      tripleSceneContainer.innerHTML = '';
+      tripleSceneContainer.appendChild(sceneDiv);
+      
+      // FIRST: Show overlay and wrapper
+      tripleOverlay.classList.add('active');
+      revealWrapper.classList.add('active');
+      
+      // SECOND: Auto-scroll to center the reveal perfectly in viewport
+      const revealElement = revealWrapper;
+      const rect = revealElement.getBoundingClientRect();
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const targetY = scrollTop + rect.top - (window.innerHeight / 2) + (rect.height / 2);
+      
+      // Smooth scroll to center
+      window.scrollTo({
+        top: targetY,
+        behavior: 'smooth'
+      });
+      
+      // THIRD: Animate cards in after scroll starts
+      setTimeout(() => {
+        const leftCard = sceneDiv.querySelector('#leftCard');
+        const centerCard = sceneDiv.querySelector('#centerCard');
+        const rightCard = sceneDiv.querySelector('#rightCard');
+        const closeBtn = sceneDiv.querySelector('#closeRevealBtn');
+        
+        leftCard.classList.add('active');
+        centerCard.classList.add('active');
+        rightCard.classList.add('active');
+        closeBtn.classList.add('visible');
+        
+        // Add staggered animation
+        gsap.fromTo(leftCard, { opacity: 0, x: -40, scale: 0.9 }, { opacity: 1, x: 0, scale: 1, duration: 0.5, ease: "back.out(0.6)" });
+        gsap.fromTo(centerCard, { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1.02, duration: 0.5, delay: 0.1, ease: "back.out(0.5)" });
+        gsap.fromTo(rightCard, { opacity: 0, x: 40, scale: 0.9 }, { opacity: 1, x: 0, scale: 1, duration: 0.5, delay: 0.05, ease: "back.out(0.6)" });
+        
+        closeBtn.addEventListener('click', closeTripleReveal);
+      }, 100);
+      
+      activeTriple = sceneDiv;
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Attach click events to flip-cards
+    function bindTripleEvents() {
+      document.querySelectorAll('.flip-card').forEach(card => {
+        card.removeEventListener('click', tripleHandler);
+        card.addEventListener('click', tripleHandler);
+      });
+    }
+    
+    function tripleHandler(e) {
+      e.stopPropagation();
+      const cardDiv = this.closest('.flip-card');
+      const idx = cardDiv.getAttribute('data-idx');
+      if (idx !== null) {
+        openTripleReveal(parseInt(idx), cardDiv);
+      }
+    }
+
+    // Initialize swipers
+    const talentSwiper = new Swiper('.talentSwiper', {
+      slidesPerView: 1, 
+      spaceBetween: 30, 
+      loop: true, 
+      centeredSlides: true,
+      navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+      pagination: { el: '.swiper-pagination', clickable: true },
+      breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } },
+      on: { 
+        init: () => setTimeout(bindTripleEvents, 100), 
+        slideChange: () => setTimeout(bindTripleEvents, 100) 
+      }
+    });
+    setTimeout(bindTripleEvents, 200);
+
+    // Social swiper
+    new Swiper('.socialSwiper', { 
+      slidesPerView: 'auto', 
+      spaceBetween: 24, 
+      loop: true, 
+      autoplay: { delay: 0, disableOnInteraction: false }, 
+      speed: 3000, 
+      freeMode: true 
+    });
+
+    // Tippy tooltips
+    tippy('.stat-tip', { content: (ref) => ref.getAttribute('data-tip'), animation: 'scale', theme: 'light' });
+    
+    // Video modal
+    const videoModalEl = document.getElementById('videoModal');
+    const modalVideo = document.getElementById('modalVideo');
+    document.querySelectorAll('.reel-thumb').forEach(thumb => {
+      thumb.addEventListener('click', () => { 
+        modalVideo.src = thumb.getAttribute('data-video'); 
+        videoModalEl.classList.add('active'); 
+        modalVideo.play(); 
+      });
+    });
+    document.getElementById('closeVideo').addEventListener('click', () => { 
+      videoModalEl.classList.remove('active'); 
+      modalVideo.pause(); 
+      modalVideo.src = ''; 
+    });
+    videoModalEl.addEventListener('click', (e) => { 
+      if(e.target === videoModalEl) { 
+        videoModalEl.classList.remove('active'); 
+        modalVideo.pause(); 
+        modalVideo.src = ''; 
+      } 
+    });
+    
+    // Contact modal
+    const contactBtn = document.getElementById('contactFloatBtn');
+    const contactModal = document.getElementById('contactModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    contactBtn.addEventListener('click', () => { 
+      contactModal.classList.remove('opacity-0','invisible'); 
+      contactModal.classList.add('opacity-100','visible'); 
+      anime({ targets: contactModal.querySelector('.glass-panel'), scale: [0.9,1], opacity: [0,1], duration: 500 }); 
+    });
+    const closeModal = () => { 
+      contactModal.classList.add('opacity-0','invisible'); 
+      contactModal.classList.remove('opacity-100','visible'); 
+    };
+    closeModalBtn.addEventListener('click', closeModal); 
+    contactModal.addEventListener('click', (e) => { if(e.target === contactModal) closeModal(); });
+    
+    // Close triple on overlay click
+    tripleOverlay.addEventListener('click', closeTripleReveal);
+    
+    // GSAP hero animations
+    gsap.registerPlugin(ScrollTrigger);
+    const tlHero = gsap.timeline();
+    tlHero.to("#heroLogo", { opacity: 1, y: 0, duration: 1 })
+          .to("#heroHeadline", { opacity: 1, y: 0, duration: 1 }, "-=0.6")
+          .to("#heroSub", { opacity: 1, y: 0, duration: 1 }, "-=0.8")
+          .to("#heroBtn", { opacity: 1, y: 0, duration: 0.8 }, "-=0.5");
+          
+    ScrollTrigger.create({ 
+      trigger: "section", 
+      start: "top top", 
+      end: "bottom top", 
+      scrub: 1, 
+      onUpdate: (self) => { 
+        const video = document.querySelector("section video");
+        if(video) video.style.transform = `scale(${1 + self.progress * 0.2})`;
+      } 
+    });
+    
+    gsap.utils.toArray('#talent, .py-24, .py-20').forEach(section => { 
+      gsap.from(section, { 
+        scrollTrigger: { trigger: section, start: "top 85%" }, 
+        opacity: 0, 
+        y: 50, 
+        duration: 1.2 
+      }); 
+    });
+  </script>
+</body>
+</html>

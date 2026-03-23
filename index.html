@@ -147,7 +147,7 @@
       opacity: 1;
       pointer-events: auto;
     }
-    /* Mobile swipe indicators */
+    /* Mobile swipe indicators and scrollable container */
     .swipe-indicator {
       position: absolute;
       bottom: -80px;
@@ -171,15 +171,16 @@
     }
     .swipe-indicator.visible { opacity: 1; }
     .swipe-indicator svg { width: 20px; height: 20px; }
-    /* Mobile scroll container for cards */
+    /* Mobile scroll container - FULL bidirectional scrolling */
     .triple-container.mobile-scrollable {
       overflow-x: auto;
       scroll-snap-type: x mandatory;
       gap: 20px;
-      padding: 0 20px;
+      padding: 0 calc(50% - 140px);
       cursor: grab;
       scroll-behavior: smooth;
       -webkit-overflow-scrolling: touch;
+      justify-content: flex-start;
     }
     .triple-container.mobile-scrollable .reveal-card {
       scroll-snap-align: center;
@@ -195,6 +196,10 @@
     .triple-container.mobile-scrollable::-webkit-scrollbar-thumb {
       background: #d4af37;
       border-radius: 10px;
+    }
+    /* Desktop default centering */
+    .triple-container:not(.mobile-scrollable) {
+      justify-content: center;
     }
     /* swiper adjustments */
     .swiper-slide { transition: transform 0.3s ease; }
@@ -217,9 +222,13 @@
     @media (max-width: 768px) {
       .reveal-card { width: 280px; height: 460px; }
       .triple-scene { height: 520px; }
-      .triple-container { gap: 15px; }
+      .triple-container.mobile-scrollable { padding: 0 calc(50% - 140px); gap: 15px; }
       .close-reveal-btn { bottom: -70px; padding: 10px 28px; font-size: 13px; }
       .swipe-indicator { bottom: -90px; }
+    }
+    @media (max-width: 480px) {
+      .triple-container.mobile-scrollable { padding: 0 calc(50% - 130px); }
+      .reveal-card { width: 260px; height: 440px; }
     }
   </style>
 </head>
@@ -350,14 +359,11 @@
       wrapper.appendChild(slideDiv);
     });
 
-    // Triple reveal engine with mobile swipe support
+    // Triple reveal engine with FULL bidirectional mobile swipe
     let activeTriple = null;
-    let isMobile = window.innerWidth <= 768;
     const tripleOverlay = document.getElementById('tripleOverlay');
     const revealWrapper = document.getElementById('revealWrapper');
     const tripleSceneContainer = document.getElementById('dynamicTripleScene');
-
-    window.addEventListener('resize', () => { isMobile = window.innerWidth <= 768; });
 
     function closeTripleReveal() {
       if (!activeTriple) return;
@@ -372,24 +378,25 @@
       if (activeTriple) closeTripleReveal();
       const model = modelsData[modelIdx];
       
-      // Create the triple card layout
+      // Check for mobile
+      const isMobileDevice = window.innerWidth <= 768;
+      
+      // Create the triple card layout with proper ordering for swipe
       const sceneDiv = document.createElement('div');
       sceneDiv.className = 'triple-scene';
       
-      // Check if mobile for scrollable container
-      const isMobileDevice = window.innerWidth <= 768;
-      
+      // Cards in order: LEFT (full body), CENTER (video), RIGHT (stats/bio)
       sceneDiv.innerHTML = `
         <div class="triple-container ${isMobileDevice ? 'mobile-scrollable' : ''}" id="tripleContainer">
-          <div class="reveal-card left" id="leftCard">
+          <div class="reveal-card left" id="leftCard" data-card-type="fullbody">
             <img class="card-media" src="${model.fullBody}" alt="${model.name} full body">
           </div>
-          <div class="reveal-card center" id="centerCard">
+          <div class="reveal-card center" id="centerCard" data-card-type="video">
             <video class="card-video" autoplay loop muted playsinline>
               <source src="${model.videoUrl}" type="video/mp4">
             </video>
           </div>
-          <div class="reveal-card right" id="rightCard">
+          <div class="reveal-card right" id="rightCard" data-card-type="stats">
             <div class="stats-bio-content">
               <h3>${model.name}</h3>
               <div class="stats-grid">
@@ -404,7 +411,7 @@
           </div>
         </div>
         <button class="close-reveal-btn" id="closeRevealBtn">✕ CLOSE GALLERY</button>
-        ${isMobileDevice ? '<div class="swipe-indicator" id="swipeIndicator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l-6-6 6-6M15 6l6 6-6 6"/></svg><span>Swipe left/right to explore</span></div>' : ''}
+        ${isMobileDevice ? '<div class="swipe-indicator" id="swipeIndicator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l-6-6 6-6M15 6l6 6-6 6"/></svg><span>Swipe left/right to explore all cards</span></div>' : ''}
       `;
       
       tripleSceneContainer.innerHTML = '';
@@ -428,6 +435,7 @@
         const rightCard = sceneDiv.querySelector('#rightCard');
         const closeBtn = sceneDiv.querySelector('#closeRevealBtn');
         const swipeIndicator = sceneDiv.querySelector('#swipeIndicator');
+        const tripleContainer = sceneDiv.querySelector('#tripleContainer');
         
         leftCard.classList.add('active');
         centerCard.classList.add('active');
@@ -441,9 +449,22 @@
         
         closeBtn.addEventListener('click', closeTripleReveal);
         
-        // Auto-hide swipe indicator after 3 seconds on mobile
+        // On mobile, ensure the container scrolls to center the video card initially
+        if (isMobileDevice && tripleContainer) {
+          setTimeout(() => {
+            const centerCardEl = tripleContainer.querySelector('#centerCard');
+            if (centerCardEl) {
+              const containerRect = tripleContainer.getBoundingClientRect();
+              const cardRect = centerCardEl.getBoundingClientRect();
+              const scrollPosition = cardRect.left - containerRect.left + tripleContainer.scrollLeft - (containerRect.width / 2) + (cardRect.width / 2);
+              tripleContainer.scrollTo({ left: scrollPosition, behavior: 'smooth' });
+            }
+          }, 400);
+        }
+        
+        // Auto-hide swipe indicator after 4 seconds
         if (swipeIndicator) {
-          setTimeout(() => swipeIndicator.classList.remove('visible'), 4000);
+          setTimeout(() => swipeIndicator.classList.remove('visible'), 4500);
         }
       }, 100);
       

@@ -35,7 +35,7 @@
     .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 1.5rem; overflow: hidden; box-shadow: 0 25px 40px -12px black; }
     .flip-card-front { background: #14171c; background-size: cover; background-position: center; }
     .flip-card-back { background: #0e1117; transform: rotateY(180deg); padding: 1rem; display: flex; flex-direction: column; justify-content: flex-end; background-size: cover; background-position: center; }
-    /* TRIPLE CARD REVEAL SYSTEM - FIXED VISIBILITY */
+    /* TRIPLE CARD REVEAL SYSTEM */
     .triple-scene {
       position: relative;
       width: 100%;
@@ -54,8 +54,9 @@
       justify-content: center;
       align-items: center;
       gap: 20px;
+      transition: transform 0.3s ease-out;
     }
-    /* Base card style - now using flex positioning instead of absolute */
+    /* Base card style */
     .reveal-card {
       width: 320px;
       height: 500px;
@@ -76,19 +77,15 @@
       transform: scale(1) translateY(0);
       pointer-events: auto;
     }
-    /* Center card gets highlight */
     .reveal-card.center {
       border: 2px solid #d4af37;
       box-shadow: 0 40px 70px rgba(0,0,0,0.7);
       transform: scale(1.02) translateY(-5px);
       z-index: 10;
     }
-    .reveal-card.center.active {
-      transform: scale(1.02) translateY(-5px);
-    }
+    .reveal-card.center.active { transform: scale(1.02) translateY(-5px); }
     .reveal-card.left { z-index: 5; }
     .reveal-card.right { z-index: 5; }
-    /* content styling inside reveal cards */
     .reveal-card .card-media { width: 100%; height: 100%; object-fit: cover; display: block; }
     .reveal-card .card-video { width: 100%; height: 100%; object-fit: cover; }
     .stats-bio-content { padding: 1.5rem; display: flex; flex-direction: column; height: 100%; background: linear-gradient(145deg, #11151e, #0a0c12); color: white; overflow-y: auto; }
@@ -120,7 +117,6 @@
     }
     .close-reveal-btn.visible { opacity: 1; pointer-events: auto; }
     .close-reveal-btn:hover { transform: translateX(-50%) scale(1.05); background: #f0e050; }
-    /* overlay darken when expanded */
     .triple-overlay {
       position: fixed;
       top: 0;
@@ -135,7 +131,6 @@
       transition: 0.3s;
     }
     .triple-overlay.active { opacity: 1; visibility: visible; }
-    /* Fixed reveal wrapper positioning */
     .reveal-wrapper {
       position: fixed;
       top: 50%;
@@ -152,6 +147,55 @@
       opacity: 1;
       pointer-events: auto;
     }
+    /* Mobile swipe indicators */
+    .swipe-indicator {
+      position: absolute;
+      bottom: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      padding: 8px 20px;
+      border-radius: 40px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      z-index: 35;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      white-space: nowrap;
+      font-size: 12px;
+      color: #d4af37;
+      border: 1px solid rgba(212,175,55,0.3);
+    }
+    .swipe-indicator.visible { opacity: 1; }
+    .swipe-indicator svg { width: 20px; height: 20px; }
+    /* Mobile scroll container for cards */
+    .triple-container.mobile-scrollable {
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 20px;
+      padding: 0 20px;
+      cursor: grab;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+    .triple-container.mobile-scrollable .reveal-card {
+      scroll-snap-align: center;
+      flex-shrink: 0;
+    }
+    .triple-container.mobile-scrollable::-webkit-scrollbar {
+      height: 4px;
+    }
+    .triple-container.mobile-scrollable::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+    }
+    .triple-container.mobile-scrollable::-webkit-scrollbar-thumb {
+      background: #d4af37;
+      border-radius: 10px;
+    }
     /* swiper adjustments */
     .swiper-slide { transition: transform 0.3s ease; }
     .social-swiper .swiper-wrapper { transition-timing-function: linear; }
@@ -160,28 +204,22 @@
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #1e1f24; }
     ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 10px; }
-    /* mobile responsiveness */
+    /* mobile responsive */
     @media (max-width: 1100px) {
       .reveal-card { width: 280px; height: 460px; }
       .triple-scene { height: 520px; }
       .stats-bio-content h3 { font-size: 1.5rem; }
     }
     @media (max-width: 900px) {
-      .reveal-card { width: 240px; height: 420px; }
-      .triple-scene { height: 480px; }
-      .triple-container { gap: 12px; }
+      .reveal-card { width: 260px; height: 440px; }
+      .triple-scene { height: 500px; }
     }
-    @media (max-width: 780px) {
-      .reveal-card { width: 220px; height: 400px; }
-      .triple-scene { height: 440px; }
-      .stats-bio-content { padding: 1rem; }
-      .stats-grid { gap: 0.5rem; }
-      .close-reveal-btn { bottom: -50px; padding: 8px 24px; font-size: 12px; }
-    }
-    @media (max-width: 680px) {
-      .triple-container { gap: 8px; }
-      .reveal-card { width: 200px; height: 360px; }
-      .triple-scene { height: 400px; }
+    @media (max-width: 768px) {
+      .reveal-card { width: 280px; height: 460px; }
+      .triple-scene { height: 520px; }
+      .triple-container { gap: 15px; }
+      .close-reveal-btn { bottom: -70px; padding: 10px 28px; font-size: 13px; }
+      .swipe-indicator { bottom: -90px; }
     }
   </style>
 </head>
@@ -196,15 +234,16 @@
     </button>
   </div>
 
-  <!-- Contact Modal -->
+  <!-- Contact Modal - Updated with email link -->
   <div id="contactModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md transition-all duration-500 opacity-0 invisible">
     <div class="glass-panel w-[90%] max-w-md p-8 rounded-3xl border border-amber-500/40 text-center transform scale-95 transition-all duration-300">
       <h3 class="text-3xl font-bold font-['Playfair_Display'] text-amber-400 mb-2">Book the Dream Team</h3>
-      <p class="text-gray-300 mb-6">Let's bring the heat to Palm Tree Beach Club.</p>
+      <p class="text-gray-300 mb-6">Please tell us next steps to lock this in!</p>
       <input type="text" placeholder="Your name" class="w-full bg-white/10 border border-white/20 rounded-xl p-3 mb-3 text-white focus:outline-none focus:border-amber-400">
       <input type="email" placeholder="Email address" class="w-full bg-white/10 border border-white/20 rounded-xl p-3 mb-3 text-white focus:outline-none focus:border-amber-400">
-      <textarea rows="2" placeholder="Tell us about your event dates..." class="w-full bg-white/10 border border-white/20 rounded-xl p-3 mb-5 text-white focus:outline-none"></textarea>
-      <button class="btn-gold w-full py-3 rounded-xl font-bold text-black tracking-wide">Send Pitch Request</button>
+      <textarea rows="3" placeholder="Tell us about your event, dates, and what you're envisioning..." class="w-full bg-white/10 border border-white/20 rounded-xl p-3 mb-5 text-white focus:outline-none focus:border-amber-400"></textarea>
+      <a href="mailto:book@EPICmodelsandtalent.com?subject=Booking%20Inquiry%20-%20Palm%20Tree%20Beach%20Club&body=Hello%20EPIC%20Models%2C%0A%0AI'm%20interested%20in%20booking%20talent%20for%20Palm%20Tree%20Beach%20Club.%0A%0AName%3A%0AEvent%20Dates%3A%0ADetails%3A%0A%0ALooking%20forward%20to%20hearing%20from%20you!" 
+         class="btn-gold w-full py-3 rounded-xl font-bold text-black tracking-wide inline-block text-center">Contact EPIC</a>
       <button id="closeModalBtn" class="mt-4 text-sm text-gray-400 hover:text-white">Cancel</button>
     </div>
   </div>
@@ -311,11 +350,14 @@
       wrapper.appendChild(slideDiv);
     });
 
-    // Triple reveal engine with auto-centering
+    // Triple reveal engine with mobile swipe support
     let activeTriple = null;
+    let isMobile = window.innerWidth <= 768;
     const tripleOverlay = document.getElementById('tripleOverlay');
     const revealWrapper = document.getElementById('revealWrapper');
     const tripleSceneContainer = document.getElementById('dynamicTripleScene');
+
+    window.addEventListener('resize', () => { isMobile = window.innerWidth <= 768; });
 
     function closeTripleReveal() {
       if (!activeTriple) return;
@@ -330,11 +372,15 @@
       if (activeTriple) closeTripleReveal();
       const model = modelsData[modelIdx];
       
-      // Create the triple card layout using flexbox (no absolute positioning issues)
+      // Create the triple card layout
       const sceneDiv = document.createElement('div');
       sceneDiv.className = 'triple-scene';
+      
+      // Check if mobile for scrollable container
+      const isMobileDevice = window.innerWidth <= 768;
+      
       sceneDiv.innerHTML = `
-        <div class="triple-container">
+        <div class="triple-container ${isMobileDevice ? 'mobile-scrollable' : ''}" id="tripleContainer">
           <div class="reveal-card left" id="leftCard">
             <img class="card-media" src="${model.fullBody}" alt="${model.name} full body">
           </div>
@@ -358,45 +404,47 @@
           </div>
         </div>
         <button class="close-reveal-btn" id="closeRevealBtn">✕ CLOSE GALLERY</button>
+        ${isMobileDevice ? '<div class="swipe-indicator" id="swipeIndicator"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l-6-6 6-6M15 6l6 6-6 6"/></svg><span>Swipe left/right to explore</span></div>' : ''}
       `;
       
       tripleSceneContainer.innerHTML = '';
       tripleSceneContainer.appendChild(sceneDiv);
       
-      // FIRST: Show overlay and wrapper
+      // Show overlay and wrapper
       tripleOverlay.classList.add('active');
       revealWrapper.classList.add('active');
       
-      // SECOND: Auto-scroll to center the reveal perfectly in viewport
+      // Auto-scroll to center
       const revealElement = revealWrapper;
       const rect = revealElement.getBoundingClientRect();
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       const targetY = scrollTop + rect.top - (window.innerHeight / 2) + (rect.height / 2);
+      window.scrollTo({ top: targetY, behavior: 'smooth' });
       
-      // Smooth scroll to center
-      window.scrollTo({
-        top: targetY,
-        behavior: 'smooth'
-      });
-      
-      // THIRD: Animate cards in after scroll starts
+      // Animate cards in
       setTimeout(() => {
         const leftCard = sceneDiv.querySelector('#leftCard');
         const centerCard = sceneDiv.querySelector('#centerCard');
         const rightCard = sceneDiv.querySelector('#rightCard');
         const closeBtn = sceneDiv.querySelector('#closeRevealBtn');
+        const swipeIndicator = sceneDiv.querySelector('#swipeIndicator');
         
         leftCard.classList.add('active');
         centerCard.classList.add('active');
         rightCard.classList.add('active');
         closeBtn.classList.add('visible');
+        if (swipeIndicator) setTimeout(() => swipeIndicator.classList.add('visible'), 300);
         
-        // Add staggered animation
         gsap.fromTo(leftCard, { opacity: 0, x: -40, scale: 0.9 }, { opacity: 1, x: 0, scale: 1, duration: 0.5, ease: "back.out(0.6)" });
         gsap.fromTo(centerCard, { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1.02, duration: 0.5, delay: 0.1, ease: "back.out(0.5)" });
         gsap.fromTo(rightCard, { opacity: 0, x: 40, scale: 0.9 }, { opacity: 1, x: 0, scale: 1, duration: 0.5, delay: 0.05, ease: "back.out(0.6)" });
         
         closeBtn.addEventListener('click', closeTripleReveal);
+        
+        // Auto-hide swipe indicator after 3 seconds on mobile
+        if (swipeIndicator) {
+          setTimeout(() => swipeIndicator.classList.remove('visible'), 4000);
+        }
       }, 100);
       
       activeTriple = sceneDiv;

@@ -56,7 +56,6 @@
       gap: 20px;
       transition: transform 0.3s ease-out;
     }
-    /* Base card style */
     .reveal-card {
       width: 320px;
       height: 500px;
@@ -72,17 +71,8 @@
       backdrop-filter: blur(4px);
       flex-shrink: 0;
     }
-    .reveal-card.active {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-      pointer-events: auto;
-    }
-    .reveal-card.center {
-      border: 2px solid #d4af37;
-      box-shadow: 0 40px 70px rgba(0,0,0,0.7);
-      transform: scale(1.02) translateY(-5px);
-      z-index: 10;
-    }
+    .reveal-card.active { opacity: 1; transform: scale(1) translateY(0); pointer-events: auto; }
+    .reveal-card.center { border: 2px solid #d4af37; box-shadow: 0 40px 70px rgba(0,0,0,0.7); transform: scale(1.02) translateY(-5px); z-index: 10; }
     .reveal-card.center.active { transform: scale(1.02) translateY(-5px); }
     .reveal-card.left { z-index: 5; }
     .reveal-card.right { z-index: 5; }
@@ -90,11 +80,10 @@
     .reveal-card .card-video { width: 100%; height: 100%; object-fit: cover; }
     .stats-bio-content { padding: 1.5rem; display: flex; flex-direction: column; height: 100%; background: linear-gradient(145deg, #11151e, #0a0c12); color: white; overflow-y: auto; }
     .stats-bio-content h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 0.5rem; color: #d4af37; }
-    .stats-grid { margin-top: 1rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
-    .stat-item { border-bottom: 1px solid rgba(212,175,55,0.3); padding: 0.4rem 0; }
-    .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #aaa; }
-    .stat-value { font-weight: 600; font-size: 1rem; }
-    .bio-blurb { margin-top: 1.2rem; font-size: 0.85rem; line-height: 1.4; color: #ccc; border-top: 1px solid rgba(212,175,55,0.3); padding-top: 1rem; }
+    .stats-bio-content p { font-size: 0.85rem; line-height: 1.4; margin: 0.5rem 0; color: #ddd; }
+    .specialties, .strengths { margin: 0.75rem 0; }
+    .specialties span, .strengths span { display: inline-block; background: rgba(212,175,55,0.2); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.7rem; margin: 0.2rem 0.3rem; color: #d4af37; }
+    .insta-link { margin-top: 0.8rem; font-size: 0.8rem; color: #d4af37; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
     .close-reveal-btn {
       position: absolute;
       bottom: -60px;
@@ -143,11 +132,8 @@
       opacity: 0;
       transition: opacity 0.3s ease;
     }
-    .reveal-wrapper.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    /* Mobile swipe indicators and scrollable container */
+    .reveal-wrapper.active { opacity: 1; pointer-events: auto; }
+    /* Mobile swipe */
     .swipe-indicator {
       position: absolute;
       bottom: -80px;
@@ -170,8 +156,6 @@
       border: 1px solid rgba(212,175,55,0.3);
     }
     .swipe-indicator.visible { opacity: 1; }
-    .swipe-indicator svg { width: 20px; height: 20px; }
-    /* Mobile scroll container - FULL bidirectional scrolling */
     .triple-container.mobile-scrollable {
       overflow-x: auto;
       scroll-snap-type: x mandatory;
@@ -182,24 +166,33 @@
       -webkit-overflow-scrolling: touch;
       justify-content: flex-start;
     }
-    .triple-container.mobile-scrollable .reveal-card {
-      scroll-snap-align: center;
-      flex-shrink: 0;
+    .triple-container.mobile-scrollable .reveal-card { scroll-snap-align: center; flex-shrink: 0; }
+    .triple-container.mobile-scrollable::-webkit-scrollbar { height: 4px; }
+    .triple-container.mobile-scrollable::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 10px; }
+    .triple-container.mobile-scrollable::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 10px; }
+    .triple-container:not(.mobile-scrollable) { justify-content: center; }
+    /* Hero Video Fix */
+    .heroBg{
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 1;
     }
-    .triple-container.mobile-scrollable::-webkit-scrollbar {
-      height: 4px;
+    .heroVid{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      filter: contrast(1.06) saturate(.9);
+      transform: scale(1.0);
+      min-width: 100%;
+      min-height: 100%;
     }
-    .triple-container.mobile-scrollable::-webkit-scrollbar-track {
-      background: rgba(255,255,255,0.1);
-      border-radius: 10px;
-    }
-    .triple-container.mobile-scrollable::-webkit-scrollbar-thumb {
-      background: #d4af37;
-      border-radius: 10px;
-    }
-    /* Desktop default centering */
-    .triple-container:not(.mobile-scrollable) {
-      justify-content: center;
+    .heroVignette{
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(800px 600px at 50% 35%, rgba(0,0,0,.10), rgba(0,0,0,.45));
+      opacity: 0.7;
     }
     /* swiper adjustments */
     .swiper-slide { transition: transform 0.3s ease; }
@@ -209,11 +202,9 @@
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #1e1f24; }
     ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 10px; }
-    /* mobile responsive */
     @media (max-width: 1100px) {
       .reveal-card { width: 280px; height: 460px; }
       .triple-scene { height: 520px; }
-      .stats-bio-content h3 { font-size: 1.5rem; }
     }
     @media (max-width: 900px) {
       .reveal-card { width: 260px; height: 440px; }
@@ -225,10 +216,6 @@
       .triple-container.mobile-scrollable { padding: 0 calc(50% - 140px); gap: 15px; }
       .close-reveal-btn { bottom: -70px; padding: 10px 28px; font-size: 13px; }
       .swipe-indicator { bottom: -90px; }
-    }
-    @media (max-width: 480px) {
-      .triple-container.mobile-scrollable { padding: 0 calc(50% - 130px); }
-      .reveal-card { width: 260px; height: 440px; }
     }
   </style>
 </head>
@@ -243,7 +230,7 @@
     </button>
   </div>
 
-  <!-- Contact Modal - Updated with email link -->
+  <!-- Contact Modal -->
   <div id="contactModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md transition-all duration-500 opacity-0 invisible">
     <div class="glass-panel w-[90%] max-w-md p-8 rounded-3xl border border-amber-500/40 text-center transform scale-95 transition-all duration-300">
       <h3 class="text-3xl font-bold font-['Playfair_Display'] text-amber-400 mb-2">Book the Dream Team</h3>
@@ -262,14 +249,16 @@
     <lottie-player src="https://assets9.lottiefiles.com/packages/lf20_hd7abqpu.json" background="transparent" speed="0.6" loop autoplay></lottie-player>
   </div>
 
-  <!-- HERO -->
+  <!-- HERO with Fixed Video -->
   <section class="relative h-screen w-full overflow-hidden">
-    <video autoplay muted loop playsinline class="absolute top-0 left-0 w-full h-full object-cover z-0">
-      <source src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c1f4bd88d54e36bc834d9f.mp4" type="video/mp4">
-    </video>
-    <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/70 z-10"></div>
+    <div class="heroBg">
+      <video class="heroVid" autoplay muted loop playsinline preload="auto">
+        <source src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c1f4bd88d54e36bc834d9f.mp4" type="video/mp4">
+      </video>
+      <div class="heroVignette"></div>
+    </div>
     <div class="relative z-20 flex flex-col items-center justify-center h-full text-center px-4">
-      <img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687edb257f24c671f43bb1cb.png" alt="EPIC Models Logo" class="w-56 md:w-80 mb-6 drop-shadow-2xl opacity-0 transform -translate-y-10" id="heroLogo">
+      <img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c0a7729bd13917730b9bba.svg" alt="EPIC Models Logo" class="w-56 md:w-80 mb-6 drop-shadow-2xl opacity-0 transform -translate-y-10" id="heroLogo">
       <h1 id="heroHeadline" class="text-4xl md:text-7xl lg:text-8xl font-bold tracking-tight font-['Playfair_Display'] opacity-0">
         <span class="text-white">EPIC meets</span><br>
         <span class="text-amber-400 gold-glow">Palm Tree Beach Club</span>
@@ -279,7 +268,7 @@
     </div>
   </section>
 
-  <!-- ELITE AMBASSADORS with TRIPLE CARD REVEAL -->
+  <!-- ELITE AMBASSADORS -->
   <section id="talent" class="py-28 px-4 md:px-8 bg-gradient-to-b from-black via-[#0f1219] to-black relative z-10">
     <div class="max-w-7xl mx-auto text-center mb-16">
       <span class="text-amber-400 tracking-widest text-sm font-semibold">THE ROSTER</span>
@@ -294,10 +283,7 @@
     </div>
   </section>
 
-  <!-- Fixed Reveal Wrapper (centered on screen) -->
-  <div class="reveal-wrapper" id="revealWrapper">
-    <div id="dynamicTripleScene"></div>
-  </div>
+  <div class="reveal-wrapper" id="revealWrapper"><div id="dynamicTripleScene"></div></div>
   <div class="triple-overlay" id="tripleOverlay"></div>
 
   <!-- Experience Reels -->
@@ -307,36 +293,99 @@
       <h2 class="text-4xl md:text-6xl font-['Playfair_Display']">Moments That Move</h2>
     </div>
     <div class="flex flex-wrap justify-center gap-8">
-      <div class="reel-thumb cursor-pointer group" data-video="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/68955de9589b44b560b89ac9.mp4">
-        <div class="w-80 h-56 rounded-2xl overflow-hidden relative shadow-xl"><img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef1de7f24c62bc83c2737.jpeg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500"><div class="absolute inset-0 bg-black/40 flex items-center justify-center"><div class="bg-amber-500 rounded-full p-3"><svg class="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div></div><p class="mt-3 text-center font-semibold">Poolside Energy Reel</p>
+      <div class="reel-thumb cursor-pointer group" data-video="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c217481599f807c5fe3d03.mp4">
+        <div class="w-80 h-56 rounded-2xl overflow-hidden relative shadow-xl"><img loading="lazy" src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bbd40c84074.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500"><div class="absolute inset-0 bg-black/40 flex items-center justify-center"><div class="bg-amber-500 rounded-full p-3"><svg class="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div></div><p class="mt-3 text-center font-semibold">Monique Reel</p>
       </div>
-      <div class="reel-thumb cursor-pointer group" data-video="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/68955de9589b44b560b89ac9.mp4">
-        <div class="w-80 h-56 rounded-2xl overflow-hidden relative shadow-xl"><img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef1de7f24c62bc83c2737.jpeg" class="w-full h-full object-cover group-hover:scale-110 transition"><div class="absolute inset-0 bg-black/40 flex items-center justify-center"><div class="bg-amber-500 rounded-full p-3"><svg class="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div></div><p class="mt-3 text-center font-semibold">VIP Host Moments</p>
+      <div class="reel-thumb cursor-pointer group" data-video="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2360107c32044c0766624.mp4">
+        <div class="w-80 h-56 rounded-2xl overflow-hidden relative shadow-xl"><img loading="lazy" src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906f935455eec.png" class="w-full h-full object-cover group-hover:scale-110 transition"><div class="absolute inset-0 bg-black/40 flex items-center justify-center"><div class="bg-amber-500 rounded-full p-3"><svg class="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div></div><p class="mt-3 text-center font-semibold">Valeria Reel</p>
       </div>
     </div>
   </section>
 
-  <!-- SOCIAL WALL -->
+  <!-- SOCIAL WALL - Updated with new images -->
   <section class="py-20 overflow-hidden relative">
     <div class="text-center mb-8"><span class="text-amber-400 text-sm">#EPICxPALMTREE</span><h2 class="text-4xl font-bold">Lifestyle Carousel</h2></div>
-    <div class="swiper socialSwiper w-full"><div class="swiper-wrapper"><div class="swiper-slide w-80"><img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef1de7f24c62bc83c2737.jpeg" class="w-80 h-96 object-cover rounded-2xl shadow-2xl"></div><div class="swiper-slide w-80"><img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef1de023a380b92923a95.png" class="w-80 h-96 object-cover rounded-2xl"></div><div class="swiper-slide w-80"><img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef265023a38a0e1923b70.jpeg" class="w-80 h-96 object-cover rounded-2xl"></div><div class="swiper-slide w-80"><img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef1de023a384c60923a92.jpeg" class="w-80 h-96 object-cover rounded-2xl"></div></div></div>
+    <div class="swiper socialSwiper w-full">
+      <div class="swiper-wrapper" id="socialWallWrapper">
+        <!-- Will be populated with new images via JS -->
+      </div>
+    </div>
   </section>
 
   <div id="videoModal" class="video-modal"><div class="relative w-11/12 md:w-3/4 lg:w-2/3 bg-black rounded-2xl overflow-hidden shadow-2xl"><video id="modalVideo" controls autoplay class="w-full h-auto max-h-[80vh]"></video><button id="closeVideo" class="absolute top-3 right-5 text-white text-3xl">&times;</button></div></div>
 
   <script>
-    // Model Data (7 models)
+    // Model Data - Updated with new profiles
     const modelsData = [
-      { name: "Sofia Reign", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/6880380e8ffd9e850fb6da26.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef265023a38a0e1923b70.jpeg", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/68955de9589b44b560b89ac9.mp4", height: "5'10\"", bust: "34B", waist: "24", hips: "35", shoe: "7.5", bio: "Runway energy meets poolside charisma. 5+ years luxury brand ambassador. Featured in Harper's Bazaar." },
-      { name: "Mateo Cruz", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/6880380f9a702e50080c12cd.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef1de023a380b92923a95.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/68955de9589b44b560b89ac9.mp4", height: "6'2\"", bust: "40", waist: "32", hips: "38", shoe: "11", bio: "The ultimate host & high-energy vibe. International DJ and event MC. Resident at Hakkasan." },
-      { name: "Isla Voss", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/6880380e8ffd9e850fb6da26.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef1de023a384c60923a92.jpeg", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/68955de9589b44b560b89ac9.mp4", height: "5'8\"", bust: "32B", waist: "23", hips: "34", shoe: "8", bio: "Tropical goddess, 8+ years luxury events. Featured in Vogue Mexico and Sports Illustrated." },
-      { name: "Damon Knight", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/6880380f9a702e50080c12cd.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef265023a38a0e1923b70.jpeg", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/68955de9589b44b560b89ac9.mp4", height: "6'0\"", bust: "40", waist: "32", hips: "39", shoe: "10.5", bio: "Miami to Vegas, party igniter. Signature high-energy bottle service host. Brand ambassador for Grey Goose." },
-      { name: "Lena Costa", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/6880380e8ffd9e850fb6da26.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef1de023a380b92923a95.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/68955de9589b44b560b89ac9.mp4", height: "5'9\"", bust: "34C", waist: "24", hips: "35", shoe: "8.5", bio: "SI Swimsuit alum, infectious smile. Brand ambassador for premium spirits and luxury resort wear." },
-      { name: "Zara Kole", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/6880380f9a702e50080c12cd.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef1de023a384c60923a92.jpeg", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/68955de9589b44b560b89ac9.mp4", height: "5'7\"", bust: "32C", waist: "24", hips: "34", shoe: "7", bio: "Global DJ & model fusion. Residency at XS Nightclub. Featured in DJ Mag Top 100." },
-      { name: "Jasper Moon", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/6880380e8ffd9e850fb6da26.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687ef265023a38a0e1923b70.jpeg", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/68955de9589b44b560b89ac9.mp4", height: "6'1\"", bust: "42", waist: "31", hips: "40", shoe: "12", bio: "Male cover model, luxury brand ambassador. Featured in GQ, Esquire, and campaigns for Versace." }
+      { 
+        name: "Monique", 
+        tagline: "Fitness-Driven Brand Ambassador | High-Energy Event Presence",
+        headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bbd40c84074.png", 
+        fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a175ee05203568fc21.png", 
+        videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c217481599f807c5fe3d03.mp4",
+        bio: "Monica is a fitness-focused model and brand ambassador known for her strong, athletic look and confident presence. With a background in health and wellness, she brings high energy, professionalism, and engaging guest interaction to every event. She is especially well-suited for fitness activations, poolside events, and lifestyle brand promotions, delivering both visual appeal and real audience engagement.",
+        specialties: ["Fitness", "Swimwear", "Brand Activations", "Dayclubs"],
+        strengths: ["High energy", "Guest interaction", "Reliable", "On-camera ready"],
+        insta: "@Fitlife.by.mony"
+      },
+      { 
+        name: "Valeria", 
+        tagline: "Lifestyle & Swimwear Model | Elegant, High-Energy Presence",
+        headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906f935455eec.png", 
+        fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bcab3c84075.png", 
+        videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2360107c32044c0766624.mp4",
+        bio: "Valeria is a lifestyle and swimwear model known for her striking look, confident presence, and natural on-camera appeal. She brings a balance of elegance and energy to every event, making her a strong fit for both upscale brand activations and high-volume daylife environments. With a polished, professional demeanor and engaging personality, Valeria excels at creating memorable guest experiences while representing brands at a high level.",
+        specialties: ["Swimwear", "Lifestyle", "Brand Activations", "Dayclubs"],
+        strengths: ["Confident presence", "Guest engagement", "Photogenic", "Reliable"],
+        insta: "@ValeriaPuebela"
+      },
+      { 
+        name: "Julie", 
+        tagline: "Glamour & Lifestyle Model | Magnetic, High-Energy Presence",
+        headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a125d18244526379c7.png", 
+        fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a1fe4d0d0bdecae21b.png", 
+        videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c9dbf5a38957c89ae0e4.mp4",
+        bio: "Julietica is a glamour and lifestyle model known for her striking look, confident energy, and strong visual presence. She brings a bold yet polished vibe to every event, making her an ideal fit for high-energy dayclubs, nightlife activations, and premium brand experiences. With a naturally engaging personality and camera-ready confidence, she consistently elevates both guest interaction and brand visibility.",
+        specialties: ["Glamour", "Lifestyle", "Swimwear", "Dayclubs & Nightlife"],
+        strengths: ["High energy", "Confident presence", "Guest engagement", "Photogenic"],
+        insta: "@Julietica13"
+      },
+      { 
+        name: "Ki", 
+        tagline: "Fitness & Glamour Model | Bold, High-Impact Presence",
+        headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a14d943d13bb8cc959.png", 
+        fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a1f5a3892c549a49d4.png", 
+        videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c217393b3a5824dc1a7fdc.mp4",
+        bio: "Ki is a fitness and glamour model known for her sculpted physique, confident energy, and commanding visual presence. She brings a bold, high-impact vibe to every event, making her an ideal fit for fitness activations, nightlife experiences, and premium brand promotions. With a strong on-camera presence and engaging personality, Ki consistently delivers standout guest interaction while elevating the overall energy of any environment.",
+        specialties: ["Fitness", "Glamour", "Swimwear", "Brand Activations", "Nightlife"],
+        strengths: ["Confident presence", "High energy", "Photogenic", "Guest engagement"],
+        insta: "@Kithebody"
+      },
+      { 
+        name: "Zoe", 
+        tagline: "Lifestyle & Brand Ambassador | Polished, Engaging Presence",
+        headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a139e309faa8697d2d.png", 
+        fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906c1ff455ee6.png", 
+        videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c217589b77f67144137551.mp4",
+        bio: "Zoe is a lifestyle model and brand ambassador known for her polished look, approachable energy, and strong on-camera presence. She brings a balance of professionalism and personality to every event, making her a great fit for both upscale brand activations and high-energy environments. With a natural ability to connect with guests and represent brands authentically, Zoe consistently delivers a memorable and engaging experience.",
+        specialties: ["Lifestyle", "Brand Activations", "Swimwear", "Trade Shows & Events"],
+        strengths: ["Approachable", "Engaging", "Reliable", "Photogenic"],
+        insta: "@ZoeLizGordon"
+      },
+      { 
+        name: "Mica", 
+        tagline: "Glamour & Lifestyle Model | Elegant, High-Impact Presence",
+        headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b9063a85455ee7.png", 
+        fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a181b374defcadedba.png", 
+        videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c235f13e56b938a6a96a77.mp4",
+        bio: "Micaela is a glamour and lifestyle model known for her striking features, poised presence, and natural on-camera confidence. She brings an elevated, sophisticated energy to every event, making her an excellent fit for luxury brand activations, upscale venues, and high-profile experiences. With a polished demeanor and engaging personality, Micaela consistently enhances both brand image and guest interaction.",
+        specialties: ["Glamour", "Lifestyle", "Swimwear", "Luxury Brand Activations"],
+        strengths: ["Elegant presence", "Photogenic", "Professional", "Engaging"],
+        insta: "@Micaelabaguear"
+      }
     ];
 
-    // Build Swiper slides
+    // Build Swiper slides with lazy-loaded images
     const wrapper = document.getElementById('talentSwiperWrapper');
     modelsData.forEach((model, idx) => {
       const slideDiv = document.createElement('div');
@@ -349,8 +398,7 @@
             <div class="flip-card-back" style="background-image: linear-gradient(0deg, rgba(0,0,0,0.8), rgba(0,0,0,0.3)), url('${model.fullBody}'); background-size: cover; background-position: center;">
               <div class="bg-black/60 backdrop-blur-md p-4 rounded-2xl w-full">
                 <h3 class="text-2xl font-bold">${model.name}</h3>
-                <p class="text-sm text-amber-300">${model.bio.substring(0, 55)}...</p>
-                <div class="flex gap-3 mt-2 text-xs font-mono"><span class="stat-tip" data-tip="Height: ${model.height} | ${model.bust} | Waist: ${model.waist} | Hips: ${model.hips}">📏 Quick Stats</span><span>👠 ${model.shoe}</span></div>
+                <p class="text-sm text-amber-300">${model.tagline.substring(0, 55)}</p>
               </div>
             </div>
           </div>
@@ -359,7 +407,30 @@
       wrapper.appendChild(slideDiv);
     });
 
-    // Triple reveal engine with FULL bidirectional mobile swipe
+    // Social Wall Images
+    const socialImages = [
+      "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b8ed048139fdead671.jpg",
+      "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b9d72f310d1698e56b.jpg",
+      "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b83b3a58c3b91a4d3c.jpg",
+      "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b87dc8097a7521c274.jpg",
+      "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b8518a4085f0836be1.jpg",
+      "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b87ec7830c7f3bdf8d.jpg",
+      "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b8ad1400764a3043c1.jpg",
+      "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b886e427510d1b6827.jpg",
+      "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b87dc809140a21c275.jpg",
+      "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b8d72f31476c98e569.jpg",
+      "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c212b8ed0481b08cead670.jpg"
+    ];
+    
+    const socialWrapper = document.getElementById('socialWallWrapper');
+    socialImages.forEach(imgUrl => {
+      const slide = document.createElement('div');
+      slide.className = 'swiper-slide w-80';
+      slide.innerHTML = `<img loading="lazy" src="${imgUrl}" class="w-80 h-96 object-cover rounded-2xl shadow-2xl">`;
+      socialWrapper.appendChild(slide);
+    });
+
+    // Triple reveal engine
     let activeTriple = null;
     const tripleOverlay = document.getElementById('tripleOverlay');
     const revealWrapper = document.getElementById('revealWrapper');
@@ -374,39 +445,33 @@
       document.body.style.overflow = '';
     }
 
-    function openTripleReveal(modelIdx, cardElement) {
+    function openTripleReveal(modelIdx) {
       if (activeTriple) closeTripleReveal();
       const model = modelsData[modelIdx];
-      
-      // Check for mobile
       const isMobileDevice = window.innerWidth <= 768;
       
-      // Create the triple card layout with proper ordering for swipe
       const sceneDiv = document.createElement('div');
       sceneDiv.className = 'triple-scene';
       
-      // Cards in order: LEFT (full body), CENTER (video), RIGHT (stats/bio)
       sceneDiv.innerHTML = `
         <div class="triple-container ${isMobileDevice ? 'mobile-scrollable' : ''}" id="tripleContainer">
-          <div class="reveal-card left" id="leftCard" data-card-type="fullbody">
-            <img class="card-media" src="${model.fullBody}" alt="${model.name} full body">
+          <div class="reveal-card left" id="leftCard">
+            <img loading="lazy" class="card-media" src="${model.fullBody}" alt="${model.name} full body">
           </div>
-          <div class="reveal-card center" id="centerCard" data-card-type="video">
-            <video class="card-video" autoplay loop muted playsinline>
+          <div class="reveal-card center" id="centerCard">
+            <video class="card-video" autoplay loop muted playsinline preload="metadata">
               <source src="${model.videoUrl}" type="video/mp4">
             </video>
           </div>
-          <div class="reveal-card right" id="rightCard" data-card-type="stats">
+          <div class="reveal-card right" id="rightCard">
             <div class="stats-bio-content">
               <h3>${model.name}</h3>
-              <div class="stats-grid">
-                <div class="stat-item"><div class="stat-label">Height</div><div class="stat-value">${model.height}</div></div>
-                <div class="stat-item"><div class="stat-label">Bust/Chest</div><div class="stat-value">${model.bust}</div></div>
-                <div class="stat-item"><div class="stat-label">Waist</div><div class="stat-value">${model.waist}</div></div>
-                <div class="stat-item"><div class="stat-label">Hips</div><div class="stat-value">${model.hips}</div></div>
-                <div class="stat-item"><div class="stat-label">Shoe</div><div class="stat-value">${model.shoe}</div></div>
-              </div>
-              <div class="bio-blurb">${model.bio}</div>
+              <p class="text-sm text-amber-300">${model.tagline}</p>
+              <p>${model.bio}</p>
+              <div class="specialties"><strong>Specialties:</strong><br>${model.specialties.map(s => `<span>${s}</span>`).join('')}</div>
+              <div class="strengths"><strong>Strengths:</strong><br>${model.strengths.map(s => `<span>${s}</span>`).join('')}</div>
+              <p><strong>Based in:</strong> Las Vegas | Available for travel<br><strong>Social:</strong> Content-friendly, brand collaboration ready</p>
+              <a href="#" class="insta-link">📷 ${model.insta}</a>
             </div>
           </div>
         </div>
@@ -417,18 +482,14 @@
       tripleSceneContainer.innerHTML = '';
       tripleSceneContainer.appendChild(sceneDiv);
       
-      // Show overlay and wrapper
       tripleOverlay.classList.add('active');
       revealWrapper.classList.add('active');
       
-      // Auto-scroll to center
-      const revealElement = revealWrapper;
-      const rect = revealElement.getBoundingClientRect();
+      const rect = revealWrapper.getBoundingClientRect();
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       const targetY = scrollTop + rect.top - (window.innerHeight / 2) + (rect.height / 2);
       window.scrollTo({ top: targetY, behavior: 'smooth' });
       
-      // Animate cards in
       setTimeout(() => {
         const leftCard = sceneDiv.querySelector('#leftCard');
         const centerCard = sceneDiv.querySelector('#centerCard');
@@ -449,7 +510,6 @@
         
         closeBtn.addEventListener('click', closeTripleReveal);
         
-        // On mobile, ensure the container scrolls to center the video card initially
         if (isMobileDevice && tripleContainer) {
           setTimeout(() => {
             const centerCardEl = tripleContainer.querySelector('#centerCard');
@@ -461,18 +521,13 @@
             }
           }, 400);
         }
-        
-        // Auto-hide swipe indicator after 4 seconds
-        if (swipeIndicator) {
-          setTimeout(() => swipeIndicator.classList.remove('visible'), 4500);
-        }
+        if (swipeIndicator) setTimeout(() => swipeIndicator.classList.remove('visible'), 4500);
       }, 100);
       
       activeTriple = sceneDiv;
       document.body.style.overflow = 'hidden';
     }
 
-    // Attach click events to flip-cards
     function bindTripleEvents() {
       document.querySelectorAll('.flip-card').forEach(card => {
         card.removeEventListener('click', tripleHandler);
@@ -482,111 +537,46 @@
     
     function tripleHandler(e) {
       e.stopPropagation();
-      const cardDiv = this.closest('.flip-card');
-      const idx = cardDiv.getAttribute('data-idx');
-      if (idx !== null) {
-        openTripleReveal(parseInt(idx), cardDiv);
-      }
+      const idx = this.getAttribute('data-idx');
+      if (idx !== null) openTripleReveal(parseInt(idx));
     }
 
-    // Initialize swipers
     const talentSwiper = new Swiper('.talentSwiper', {
-      slidesPerView: 1, 
-      spaceBetween: 30, 
-      loop: true, 
-      centeredSlides: true,
+      slidesPerView: 1, spaceBetween: 30, loop: true, centeredSlides: true,
       navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
       pagination: { el: '.swiper-pagination', clickable: true },
       breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } },
-      on: { 
-        init: () => setTimeout(bindTripleEvents, 100), 
-        slideChange: () => setTimeout(bindTripleEvents, 100) 
-      }
+      on: { init: () => setTimeout(bindTripleEvents, 100), slideChange: () => setTimeout(bindTripleEvents, 100) }
     });
     setTimeout(bindTripleEvents, 200);
 
-    // Social swiper
-    new Swiper('.socialSwiper', { 
-      slidesPerView: 'auto', 
-      spaceBetween: 24, 
-      loop: true, 
-      autoplay: { delay: 0, disableOnInteraction: false }, 
-      speed: 3000, 
-      freeMode: true 
-    });
+    new Swiper('.socialSwiper', { slidesPerView: 'auto', spaceBetween: 24, loop: true, autoplay: { delay: 0, disableOnInteraction: false }, speed: 3000, freeMode: true });
 
-    // Tippy tooltips
-    tippy('.stat-tip', { content: (ref) => ref.getAttribute('data-tip'), animation: 'scale', theme: 'light' });
-    
     // Video modal
     const videoModalEl = document.getElementById('videoModal');
     const modalVideo = document.getElementById('modalVideo');
     document.querySelectorAll('.reel-thumb').forEach(thumb => {
-      thumb.addEventListener('click', () => { 
-        modalVideo.src = thumb.getAttribute('data-video'); 
-        videoModalEl.classList.add('active'); 
-        modalVideo.play(); 
-      });
+      thumb.addEventListener('click', () => { modalVideo.src = thumb.getAttribute('data-video'); videoModalEl.classList.add('active'); modalVideo.play(); });
     });
-    document.getElementById('closeVideo').addEventListener('click', () => { 
-      videoModalEl.classList.remove('active'); 
-      modalVideo.pause(); 
-      modalVideo.src = ''; 
-    });
-    videoModalEl.addEventListener('click', (e) => { 
-      if(e.target === videoModalEl) { 
-        videoModalEl.classList.remove('active'); 
-        modalVideo.pause(); 
-        modalVideo.src = ''; 
-      } 
-    });
+    document.getElementById('closeVideo').addEventListener('click', () => { videoModalEl.classList.remove('active'); modalVideo.pause(); modalVideo.src = ''; });
+    videoModalEl.addEventListener('click', (e) => { if(e.target === videoModalEl) { videoModalEl.classList.remove('active'); modalVideo.pause(); modalVideo.src = ''; } });
     
     // Contact modal
-    const contactBtn = document.getElementById('contactFloatBtn');
-    const contactModal = document.getElementById('contactModal');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    contactBtn.addEventListener('click', () => { 
-      contactModal.classList.remove('opacity-0','invisible'); 
-      contactModal.classList.add('opacity-100','visible'); 
-      anime({ targets: contactModal.querySelector('.glass-panel'), scale: [0.9,1], opacity: [0,1], duration: 500 }); 
-    });
-    const closeModal = () => { 
-      contactModal.classList.add('opacity-0','invisible'); 
-      contactModal.classList.remove('opacity-100','visible'); 
-    };
-    closeModalBtn.addEventListener('click', closeModal); 
-    contactModal.addEventListener('click', (e) => { if(e.target === contactModal) closeModal(); });
-    
-    // Close triple on overlay click
+    const contactBtn = document.getElementById('contactFloatBtn'), contactModal = document.getElementById('contactModal'), closeModalBtn = document.getElementById('closeModalBtn');
+    contactBtn.addEventListener('click', () => { contactModal.classList.remove('opacity-0','invisible'); contactModal.classList.add('opacity-100','visible'); anime({ targets: contactModal.querySelector('.glass-panel'), scale: [0.9,1], opacity: [0,1], duration: 500 }); });
+    const closeModal = () => { contactModal.classList.add('opacity-0','invisible'); contactModal.classList.remove('opacity-100','visible'); };
+    closeModalBtn.addEventListener('click', closeModal); contactModal.addEventListener('click', (e) => { if(e.target === contactModal) closeModal(); });
     tripleOverlay.addEventListener('click', closeTripleReveal);
     
-    // GSAP hero animations
+    // GSAP animations
     gsap.registerPlugin(ScrollTrigger);
-    const tlHero = gsap.timeline();
-    tlHero.to("#heroLogo", { opacity: 1, y: 0, duration: 1 })
-          .to("#heroHeadline", { opacity: 1, y: 0, duration: 1 }, "-=0.6")
-          .to("#heroSub", { opacity: 1, y: 0, duration: 1 }, "-=0.8")
-          .to("#heroBtn", { opacity: 1, y: 0, duration: 0.8 }, "-=0.5");
-          
-    ScrollTrigger.create({ 
-      trigger: "section", 
-      start: "top top", 
-      end: "bottom top", 
-      scrub: 1, 
-      onUpdate: (self) => { 
-        const video = document.querySelector("section video");
-        if(video) video.style.transform = `scale(${1 + self.progress * 0.2})`;
-      } 
-    });
+    gsap.to("#heroLogo", { opacity: 1, y: 0, duration: 1 });
+    gsap.to("#heroHeadline", { opacity: 1, y: 0, duration: 1, delay: 0.2 });
+    gsap.to("#heroSub", { opacity: 1, y: 0, duration: 1, delay: 0.4 });
+    gsap.to("#heroBtn", { opacity: 1, y: 0, duration: 0.8, delay: 0.6 });
     
-    gsap.utils.toArray('#talent, .py-24, .py-20').forEach(section => { 
-      gsap.from(section, { 
-        scrollTrigger: { trigger: section, start: "top 85%" }, 
-        opacity: 0, 
-        y: 50, 
-        duration: 1.2 
-      }); 
-    });
+    ScrollTrigger.create({ trigger: "section", start: "top top", end: "bottom top", scrub: 1, onUpdate: (self) => { const video = document.querySelector(".heroVid"); if(video) video.style.transform = `scale(${1 + self.progress * 0.08})`; } });
+    gsap.utils.toArray('#talent, .py-24, .py-20').forEach(section => { gsap.from(section, { scrollTrigger: { trigger: section, start: "top 85%" }, opacity: 0, y: 50, duration: 1.2 }); });
   </script>
 </body>
 </html>

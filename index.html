@@ -209,40 +209,50 @@
       background: radial-gradient(800px 600px at 50% 35%, rgba(0,0,0,.10), rgba(0,0,0,.55));
       opacity: 0.7;
     }
-    /* CINEMATIC HERO TYPOGRAPHY - ENHANCED TEXT SHADOWS */
+    /* CINEMATIC HERO TYPOGRAPHY - ENHANCED WITH BLACK OUTLINE */
     .hero-title-main {
       font-family: 'Playfair Display', serif;
       font-weight: 800;
       letter-spacing: -0.02em;
+    }
+    .hero-title-white {
+      color: white;
       text-shadow: 
-        0 2px 10px rgba(0,0,0,0.8),
-        0 4px 20px rgba(0,0,0,0.6),
+        0 2px 10px rgba(0,0,0,0.9),
+        0 4px 20px rgba(0,0,0,0.7),
         0 8px 40px rgba(0,0,0,0.5),
-        0 0 0 1px rgba(212,175,55,0.4),
-        0 0 20px rgba(212,175,55,0.3);
+        -1px -1px 0 rgba(0,0,0,0.3),
+        1px -1px 0 rgba(0,0,0,0.3),
+        -1px 1px 0 rgba(0,0,0,0.3),
+        1px 1px 0 rgba(0,0,0,0.3);
+    }
+    .hero-title-gold {
+      color: #d4af37;
+      text-shadow: 
+        0 2px 10px rgba(0,0,0,0.9),
+        0 4px 20px rgba(0,0,0,0.7),
+        0 8px 40px rgba(0,0,0,0.5),
+        0 0 0 2px rgba(0,0,0,0.8),
+        0 0 0 4px rgba(0,0,0,0.4),
+        0 0 20px rgba(212,175,55,0.5);
     }
     .hero-subtitle {
       font-weight: 600;
       letter-spacing: 0.02em;
       text-shadow: 
-        0 2px 12px rgba(0,0,0,0.8),
-        0 4px 25px rgba(0,0,0,0.6),
-        0 0 10px rgba(0,0,0,0.5);
+        0 2px 12px rgba(0,0,0,0.9),
+        0 4px 25px rgba(0,0,0,0.7),
+        0 0 10px rgba(0,0,0,0.6);
       backdrop-filter: blur(3px);
-      background: rgba(0,0,0,0.2);
+      background: rgba(0,0,0,0.25);
       display: inline-block;
-    }
-    .hero-tagline {
-      text-shadow: 
-        0 2px 10px rgba(0,0,0,0.7),
-        0 4px 15px rgba(0,0,0,0.5);
-      font-weight: 500;
     }
     @media (max-width: 768px) {
       .heroVidDesktop { display: none; }
       .heroVidMobile { display: block; }
-      .hero-title-main { font-size: 3rem !important; letter-spacing: -0.01em; text-shadow: 0 2px 8px rgba(0,0,0,0.9), 0 4px 20px rgba(0,0,0,0.7); }
-      .hero-subtitle { font-size: 1.25rem !important; backdrop-filter: blur(4px); background: rgba(0,0,0,0.3); }
+      .hero-title-white, .hero-title-gold { font-size: 3rem !important; letter-spacing: -0.01em; }
+      .hero-title-gold { text-shadow: 0 2px 8px rgba(0,0,0,0.9), 0 4px 20px rgba(0,0,0,0.7), 0 0 0 2px rgba(0,0,0,0.6); }
+      .hero-subtitle { font-size: 1.25rem !important; backdrop-filter: blur(4px); background: rgba(0,0,0,0.35); }
     }
     .swiper-slide { transition: transform 0.3s ease; }
     .social-swiper .swiper-wrapper { transition-timing-function: linear; }
@@ -298,7 +308,7 @@
     <lottie-player src="https://assets9.lottiefiles.com/packages/lf20_hd7abqpu.json" background="transparent" speed="0.6" loop autoplay></lottie-player>
   </div>
 
-  <!-- HERO with Responsive Videos + Enhanced Cinematic Text Shadows -->
+  <!-- HERO with Responsive Videos + Enhanced Cinematic Text Shadows + Black Outline -->
   <section class="relative h-screen w-full overflow-hidden">
     <div class="heroBg">
       <video class="heroVidDesktop" autoplay muted loop playsinline preload="auto">
@@ -312,8 +322,8 @@
     <div class="relative z-20 flex flex-col items-center justify-center h-full text-center px-4">
       <img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687edb257f24c671f43bb1cb.png" alt="EPIC Models Logo" class="w-56 md:w-80 mb-6 drop-shadow-2xl opacity-0 transform -translate-y-10" id="heroLogo">
       <h1 id="heroHeadline" class="hero-title-main text-5xl md:text-8xl lg:text-9xl font-bold tracking-tight opacity-0">
-        <span class="text-white">EPIC meets</span><br>
-        <span class="text-amber-400 gold-glow">Palm Tree Beach Club</span>
+        <span class="hero-title-white">EPIC meets</span><br>
+        <span class="hero-title-gold gold-glow">Palm Tree Beach Club</span>
       </h1>
       <p class="hero-subtitle text-xl md:text-3xl max-w-3xl mt-6 text-white/95 px-6 py-3 rounded-full opacity-0 font-semibold tracking-wide" id="heroSub">The ultimate poolside alliance • Summer Wed–Sun • Book the icons</p>
       <div class="mt-10 flex gap-5 opacity-0" id="heroBtn"><a href="#talent" class="btn-gold px-10 py-4 rounded-full font-bold text-black tracking-wide text-lg shadow-2xl hover:shadow-amber-500/50 transition-all">Discover Talent</a></div>

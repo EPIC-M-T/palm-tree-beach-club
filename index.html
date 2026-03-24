@@ -247,12 +247,40 @@
       background: rgba(0,0,0,0.25);
       display: inline-block;
     }
+    /* Click instruction text - fully responsive */
+    .click-instruction {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: rgba(212, 175, 55, 0.9);
+      text-align: center;
+      margin-top: 1rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .click-instruction svg {
+      width: 18px;
+      height: 18px;
+      stroke: #d4af37;
+      stroke-width: 1.5;
+      fill: none;
+    }
     @media (max-width: 768px) {
       .heroVidDesktop { display: none; }
       .heroVidMobile { display: block; }
       .hero-title-white, .hero-title-gold { font-size: 3rem !important; letter-spacing: -0.01em; }
       .hero-title-gold { text-shadow: 0 2px 8px rgba(0,0,0,0.9), 0 4px 20px rgba(0,0,0,0.7), 0 0 0 2px rgba(0,0,0,0.6); }
       .hero-subtitle { font-size: 1.25rem !important; backdrop-filter: blur(4px); background: rgba(0,0,0,0.35); }
+      .click-instruction { font-size: 0.7rem; gap: 6px; }
+      .click-instruction svg { width: 14px; height: 14px; }
+    }
+    @media (max-width: 480px) {
+      .click-instruction { font-size: 0.65rem; }
     }
     .swiper-slide { transition: transform 0.3s ease; }
     .social-swiper .swiper-wrapper { transition-timing-function: linear; }
@@ -336,6 +364,18 @@
       <span class="text-amber-400 tracking-widest text-sm font-semibold">THE ROSTER</span>
       <h2 class="text-5xl md:text-7xl font-['Playfair_Display'] mt-2">Elite Ambassadors</h2>
       <div class="w-24 h-1 bg-amber-500 mx-auto mt-4 rounded-full"></div>
+      <!-- Click instruction text - fully responsive -->
+      <div class="click-instruction mt-4">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+          <path d="M12 2v4M12 22v-4M4 12H2M22 12h-2M19.07 4.93l-2.83 2.83M4.93 19.07l2.83-2.83M19.07 19.07l-2.83-2.83M4.93 4.93l2.83 2.83"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+        <span>Click models to reveal full experience • Full body • Video • Bio</span>
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+          <path d="M12 2v4M12 22v-4M4 12H2M22 12h-2M19.07 4.93l-2.83 2.83M4.93 19.07l2.83-2.83M19.07 19.07l-2.83-2.83M4.93 4.93l2.83 2.83"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+      </div>
     </div>
     <div class="swiper talentSwiper !overflow-visible relative">
       <div class="swiper-wrapper" id="talentSwiperWrapper"></div>
@@ -377,12 +417,12 @@
   <script>
     // Model Data
     const modelsData = [
-      { name: "Zoe", tagline: "Lifestyle & Brand Ambassador | Polished, Engaging Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a139e309faa8697d2d.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906c1ff455ee6.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2d8c2eaed068cf0a0b66b.mp4", bio: "Zoe is a lifestyle model and brand ambassador known for her polished look...", specialties: ["Lifestyle", "Brand Activations", "Swimwear", "Trade Shows & Events"], strengths: ["Approachable", "Engaging", "Reliable", "Photogenic"], insta: "@ZoeLizGordon" },
-      { name: "Valeria", tagline: "Lifestyle & Swimwear Model | Elegant, High-Energy Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906f935455eec.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bcab3c84075.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8ffd37d104780da819.mp4", bio: "Valeria is a lifestyle and swimwear model known for her striking look, confident presence...", specialties: ["Swimwear", "Lifestyle", "Brand Activations", "Dayclubs"], strengths: ["Confident presence", "Guest engagement", "Photogenic", "Reliable"], insta: "@ValeriaPuebela" },
-      { name: "Ki", tagline: "Fitness-Driven Brand Ambassador | High-Energy Event Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bbd40c84074.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a175ee05203568fc21.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2dbe339e30902466cfe28.mp4", bio: "Ki is a fitness-focused model and brand ambassador known for her strong, athletic look and confident presence...", specialties: ["Fitness", "Swimwear", "Brand Activations", "Dayclubs"], strengths: ["High energy", "Guest interaction", "Reliable", "On-camera ready"], insta: "@kithebody" },
-      { name: "Julie", tagline: "Glamour & Lifestyle Model | Magnetic, High-Energy Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a125d18244526379c7.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a1fe4d0d0bdecae21b.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c9dbf5a38957c89ae0e4.mp4", bio: "Julietica is a glamour and lifestyle model known for her striking look, confident energy...", specialties: ["Glamour", "Lifestyle", "Swimwear", "Dayclubs & Nightlife"], strengths: ["High energy", "Confident presence", "Guest engagement", "Photogenic"], insta: "@Julietica13" },
-      { name: "Monique", tagline: "Fitness & Glamour Model | Bold, High-Impact Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a14d943d13bb8cc959.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a1f5a3892c549a49d4.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8f1a6adab44165877d.mp4", bio: "Monique is a fitness and glamour model known for her sculpted physique...", specialties: ["Fitness", "Glamour", "Swimwear", "Brand Activations", "Nightlife"], strengths: ["Confident presence", "High energy", "Photogenic", "Guest engagement"], insta: "@Fitlife.by.mony" },
-      { name: "Mica", tagline: "Glamour & Lifestyle Model | Elegant, High-Impact Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b9063a85455ee7.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a181b374defcadedba.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8fcf4f9a4b4c0e67ee.mp4", bio: "Micaela is a glamour and lifestyle model known for her striking features...", specialties: ["Glamour", "Lifestyle", "Swimwear", "Luxury Brand Activations"], strengths: ["Elegant presence", "Photogenic", "Professional", "Engaging"], insta: "@Micaelabaguear" }
+      { name: "Zoe", tagline: "Lifestyle & Brand Ambassador | Polished, Engaging Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a139e309faa8697d2d.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906c1ff455ee6.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2d8c2eaed068cf0a0b66b.mp4", bio: "Zoe is a lifestyle model and brand ambassador known for her polished look, approachable energy, and strong on-camera presence. She brings a balance of professionalism and personality to every event, making her a great fit for both upscale brand activations and high-energy environments.", specialties: ["Lifestyle", "Brand Activations", "Swimwear", "Trade Shows & Events"], strengths: ["Approachable", "Engaging", "Reliable", "Photogenic"], insta: "@ZoeLizGordon" },
+      { name: "Valeria", tagline: "Lifestyle & Swimwear Model | Elegant, High-Energy Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906f935455eec.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bcab3c84075.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8ffd37d104780da819.mp4", bio: "Valeria is a lifestyle and swimwear model known for her striking look, confident presence, and natural on-camera appeal. She brings a balance of elegance and energy to every event, making her a strong fit for both upscale brand activations and high-volume daylife environments.", specialties: ["Swimwear", "Lifestyle", "Brand Activations", "Dayclubs"], strengths: ["Confident presence", "Guest engagement", "Photogenic", "Reliable"], insta: "@ValeriaPuebela" },
+      { name: "Ki", tagline: "Fitness-Driven Brand Ambassador | High-Energy Event Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bbd40c84074.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a175ee05203568fc21.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2dbe339e30902466cfe28.mp4", bio: "Ki is a fitness-focused model and brand ambassador known for her strong, athletic look and confident presence. With a background in health and wellness, she brings high energy, professionalism, and engaging guest interaction to every event.", specialties: ["Fitness", "Swimwear", "Brand Activations", "Dayclubs"], strengths: ["High energy", "Guest interaction", "Reliable", "On-camera ready"], insta: "@kithebody" },
+      { name: "Julie", tagline: "Glamour & Lifestyle Model | Magnetic, High-Energy Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a125d18244526379c7.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a1fe4d0d0bdecae21b.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c9dbf5a38957c89ae0e4.mp4", bio: "Julietica is a glamour and lifestyle model known for her striking look, confident energy, and strong visual presence. She brings a bold yet polished vibe to every event, making her an ideal fit for high-energy dayclubs, nightlife activations, and premium brand experiences.", specialties: ["Glamour", "Lifestyle", "Swimwear", "Dayclubs & Nightlife"], strengths: ["High energy", "Confident presence", "Guest engagement", "Photogenic"], insta: "@Julietica13" },
+      { name: "Monique", tagline: "Fitness & Glamour Model | Bold, High-Impact Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a14d943d13bb8cc959.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a1f5a3892c549a49d4.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8f1a6adab44165877d.mp4", bio: "Monique is a fitness and glamour model known for her sculpted physique, confident energy, and commanding visual presence. She brings a bold, high-impact vibe to every event, making her an ideal fit for fitness activations, nightlife experiences, and premium brand promotions.", specialties: ["Fitness", "Glamour", "Swimwear", "Brand Activations", "Nightlife"], strengths: ["Confident presence", "High energy", "Photogenic", "Guest engagement"], insta: "@Fitlife.by.mony" },
+      { name: "Mica", tagline: "Glamour & Lifestyle Model | Elegant, High-Impact Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b9063a85455ee7.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a181b374defcadedba.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8fcf4f9a4b4c0e67ee.mp4", bio: "Micaela is a glamour and lifestyle model known for her striking features, poised presence, and natural on-camera confidence. She brings an elevated, sophisticated energy to every event, making her an excellent fit for luxury brand activations, upscale venues, and high-profile experiences.", specialties: ["Glamour", "Lifestyle", "Swimwear", "Luxury Brand Activations"], strengths: ["Elegant presence", "Photogenic", "Professional", "Engaging"], insta: "@Micaelabaguear" }
     ];
 
     const wrapper = document.getElementById('talentSwiperWrapper');

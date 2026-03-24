@@ -247,7 +247,7 @@
       background: rgba(0,0,0,0.25);
       display: inline-block;
     }
-    /* Click instruction text - fully responsive */
+    /* Click instruction text - responsive */
     .click-instruction {
       font-family: 'Inter', sans-serif;
       font-size: 0.9rem;
@@ -270,17 +270,65 @@
       stroke-width: 1.5;
       fill: none;
     }
+    .click-instruction-mobile {
+      display: none;
+    }
     @media (max-width: 768px) {
       .heroVidDesktop { display: none; }
       .heroVidMobile { display: block; }
       .hero-title-white, .hero-title-gold { font-size: 3rem !important; letter-spacing: -0.01em; }
       .hero-title-gold { text-shadow: 0 2px 8px rgba(0,0,0,0.9), 0 4px 20px rgba(0,0,0,0.7), 0 0 0 2px rgba(0,0,0,0.6); }
       .hero-subtitle { font-size: 1.25rem !important; backdrop-filter: blur(4px); background: rgba(0,0,0,0.35); }
-      .click-instruction { font-size: 0.7rem; gap: 6px; }
-      .click-instruction svg { width: 14px; height: 14px; }
+      /* Hide desktop version on mobile */
+      .click-instruction-desktop { display: none; }
+      /* Show stacked mobile version */
+      .click-instruction-mobile { 
+        display: flex; 
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        margin-top: 1rem;
+      }
+      .click-instruction-mobile .main-text {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.7rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: rgba(212, 175, 55, 0.9);
+        font-weight: 600;
+      }
+      .click-instruction-mobile .bullet-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        margin-top: 4px;
+      }
+      .click-instruction-mobile .bullet-item {
+        font-size: 0.65rem;
+        letter-spacing: 0.03em;
+        color: rgba(212, 175, 55, 0.8);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .click-instruction-mobile .bullet-item::before {
+        content: "•";
+        color: #d4af37;
+        font-size: 0.8rem;
+        font-weight: bold;
+      }
+      .click-instruction-mobile svg {
+        width: 14px;
+        height: 14px;
+        stroke: #d4af37;
+        stroke-width: 1.5;
+      }
     }
     @media (max-width: 480px) {
-      .click-instruction { font-size: 0.65rem; }
+      .click-instruction-mobile .main-text { font-size: 0.65rem; }
+      .click-instruction-mobile .bullet-item { font-size: 0.6rem; }
     }
     .swiper-slide { transition: transform 0.3s ease; }
     .social-swiper .swiper-wrapper { transition-timing-function: linear; }
@@ -364,14 +412,29 @@
       <span class="text-amber-400 tracking-widest text-sm font-semibold">THE ROSTER</span>
       <h2 class="text-5xl md:text-7xl font-['Playfair_Display'] mt-2">Elite Ambassadors</h2>
       <div class="w-24 h-1 bg-amber-500 mx-auto mt-4 rounded-full"></div>
-      <!-- Click instruction text - fully responsive -->
-      <div class="click-instruction mt-4">
+      
+      <!-- Desktop Version - Horizontal Layout -->
+      <div class="click-instruction click-instruction-desktop mt-4">
         <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
           <path d="M12 2v4M12 22v-4M4 12H2M22 12h-2M19.07 4.93l-2.83 2.83M4.93 19.07l2.83-2.83M19.07 19.07l-2.83-2.83M4.93 4.93l2.83 2.83"/>
           <circle cx="12" cy="12" r="3"/>
         </svg>
-        <span>Click models to reveal full experience • Full body • Video • Bio</span>
+        <span>CLICK MODELS TO REVEAL FULL EXPERIENCE • FULL BODY • VIDEO REEL • BIO</span>
         <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+          <path d="M12 2v4M12 22v-4M4 12H2M22 12h-2M19.07 4.93l-2.83 2.83M4.93 19.07l2.83-2.83M19.07 19.07l-2.83-2.83M4.93 4.93l2.83 2.83"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+      </div>
+      
+      <!-- Mobile Version - Stacked Layout -->
+      <div class="click-instruction-mobile mt-4">
+        <div class="main-text">CLICK MODELS TO REVEAL FULL EXPERIENCE</div>
+        <div class="bullet-list">
+          <div class="bullet-item">FULL BODY</div>
+          <div class="bullet-item">VIDEO REEL</div>
+          <div class="bullet-item">BIO</div>
+        </div>
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
           <path d="M12 2v4M12 22v-4M4 12H2M22 12h-2M19.07 4.93l-2.83 2.83M4.93 19.07l2.83-2.83M19.07 19.07l-2.83-2.83M4.93 4.93l2.83 2.83"/>
           <circle cx="12" cy="12" r="3"/>
         </svg>

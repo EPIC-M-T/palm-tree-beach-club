@@ -70,6 +70,7 @@
       pointer-events: none;
       backdrop-filter: blur(4px);
       flex-shrink: 0;
+      position: relative;
     }
     .reveal-card.active { opacity: 1; transform: scale(1) translateY(0); pointer-events: auto; }
     .reveal-card.center { border: 2px solid #d4af37; box-shadow: 0 40px 70px rgba(0,0,0,0.7); transform: scale(1.02) translateY(-5px); z-index: 10; }
@@ -78,6 +79,18 @@
     .reveal-card.right { z-index: 5; }
     .reveal-card .card-media { width: 100%; height: 100%; object-fit: cover; display: block; }
     .reveal-card .card-video { width: 100%; height: 100%; object-fit: cover; }
+    .video-fallback-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      pointer-events: none;
+      z-index: 5;
+    }
     .stats-bio-content { padding: 1.5rem; display: flex; flex-direction: column; height: 100%; background: linear-gradient(145deg, #11151e, #0a0c12); color: white; overflow-y: auto; }
     .stats-bio-content h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 0.5rem; color: #d4af37; }
     .stats-bio-content p { font-size: 0.85rem; line-height: 1.4; margin: 0.5rem 0; color: #ddd; }
@@ -171,7 +184,7 @@
     .triple-container.mobile-scrollable::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 10px; }
     .triple-container.mobile-scrollable::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 10px; }
     .triple-container:not(.mobile-scrollable) { justify-content: center; }
-    /* Hero Video Fix */
+    /* Hero Video */
     .heroBg{
       position: absolute;
       inset: 0;
@@ -194,7 +207,6 @@
       background: radial-gradient(800px 600px at 50% 35%, rgba(0,0,0,.10), rgba(0,0,0,.45));
       opacity: 0.7;
     }
-    /* swiper adjustments */
     .swiper-slide { transition: transform 0.3s ease; }
     .social-swiper .swiper-wrapper { transition-timing-function: linear; }
     .video-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(12px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
@@ -249,7 +261,7 @@
     <lottie-player src="https://assets9.lottiefiles.com/packages/lf20_hd7abqpu.json" background="transparent" speed="0.6" loop autoplay></lottie-player>
   </div>
 
-  <!-- HERO with Fixed Video -->
+  <!-- HERO with Updated Video -->
   <section class="relative h-screen w-full overflow-hidden">
     <div class="heroBg">
       <video class="heroVid" autoplay muted loop playsinline preload="auto">
@@ -293,22 +305,20 @@
       <h2 class="text-4xl md:text-6xl font-['Playfair_Display']">Moments That Move</h2>
     </div>
     <div class="flex flex-wrap justify-center gap-8">
-      <div class="reel-thumb cursor-pointer group" data-video="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c217481599f807c5fe3d03.mp4">
+      <div class="reel-thumb cursor-pointer group" data-video="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c217481599f807c5fe3d03.mp4" data-fallback="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bbd40c84074.png">
         <div class="w-80 h-56 rounded-2xl overflow-hidden relative shadow-xl"><img loading="lazy" src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bbd40c84074.png" class="w-full h-full object-cover group-hover:scale-110 transition duration-500"><div class="absolute inset-0 bg-black/40 flex items-center justify-center"><div class="bg-amber-500 rounded-full p-3"><svg class="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div></div><p class="mt-3 text-center font-semibold">Monique Reel</p>
       </div>
-      <div class="reel-thumb cursor-pointer group" data-video="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2360107c32044c0766624.mp4">
+      <div class="reel-thumb cursor-pointer group" data-video="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2360107c32044c0766624.mp4" data-fallback="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906f935455eec.png">
         <div class="w-80 h-56 rounded-2xl overflow-hidden relative shadow-xl"><img loading="lazy" src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906f935455eec.png" class="w-full h-full object-cover group-hover:scale-110 transition"><div class="absolute inset-0 bg-black/40 flex items-center justify-center"><div class="bg-amber-500 rounded-full p-3"><svg class="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div></div><p class="mt-3 text-center font-semibold">Valeria Reel</p>
       </div>
     </div>
   </section>
 
-  <!-- SOCIAL WALL - Updated with new images -->
+  <!-- SOCIAL WALL -->
   <section class="py-20 overflow-hidden relative">
     <div class="text-center mb-8"><span class="text-amber-400 text-sm">#EPICxPALMTREE</span><h2 class="text-4xl font-bold">Lifestyle Carousel</h2></div>
     <div class="swiper socialSwiper w-full">
-      <div class="swiper-wrapper" id="socialWallWrapper">
-        <!-- Will be populated with new images via JS -->
-      </div>
+      <div class="swiper-wrapper" id="socialWallWrapper"></div>
     </div>
   </section>
 
@@ -430,6 +440,53 @@
       socialWrapper.appendChild(slide);
     });
 
+    // Helper function to create video card with fallback
+    function createVideoCard(videoUrl, fallbackImage, modelName) {
+      const centerCard = document.createElement('div');
+      centerCard.className = 'reveal-card center';
+      centerCard.id = 'centerCard';
+      
+      const video = document.createElement('video');
+      video.className = 'card-video';
+      video.autoplay = true;
+      video.loop = true;
+      video.muted = true;
+      video.playsInline = true;
+      video.preload = 'metadata';
+      
+      const source = document.createElement('source');
+      source.src = videoUrl;
+      source.type = 'video/mp4';
+      video.appendChild(source);
+      
+      video.onerror = function() {
+        console.log(`Video failed to load for ${modelName}, using image fallback`);
+        centerCard.innerHTML = '';
+        
+        const img = document.createElement('img');
+        img.className = 'card-media';
+        img.src = fallbackImage;
+        img.alt = `${modelName} video preview`;
+        img.loading = 'lazy';
+        centerCard.appendChild(img);
+        
+        const overlay = document.createElement('div');
+        overlay.className = 'video-fallback-overlay';
+        overlay.innerHTML = `
+          <div class="bg-amber-500 rounded-full p-4">
+            <svg class="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </div>
+          <p class="text-white text-xs font-semibold mt-2">Video Preview</p>
+        `;
+        centerCard.appendChild(overlay);
+      };
+      
+      centerCard.appendChild(video);
+      return centerCard;
+    }
+
     // Triple reveal engine
     let activeTriple = null;
     const tripleOverlay = document.getElementById('tripleOverlay');
@@ -458,11 +515,6 @@
           <div class="reveal-card left" id="leftCard">
             <img loading="lazy" class="card-media" src="${model.fullBody}" alt="${model.name} full body">
           </div>
-          <div class="reveal-card center" id="centerCard">
-            <video class="card-video" autoplay loop muted playsinline preload="metadata">
-              <source src="${model.videoUrl}" type="video/mp4">
-            </video>
-          </div>
           <div class="reveal-card right" id="rightCard">
             <div class="stats-bio-content">
               <h3>${model.name}</h3>
@@ -482,6 +534,15 @@
       tripleSceneContainer.innerHTML = '';
       tripleSceneContainer.appendChild(sceneDiv);
       
+      // Add the video card with fallback
+      const tripleContainer = sceneDiv.querySelector('#tripleContainer');
+      const centerCard = createVideoCard(model.videoUrl, model.fullBody, model.name);
+      const leftCard = sceneDiv.querySelector('#leftCard');
+      const rightCard = sceneDiv.querySelector('#rightCard');
+      
+      // Insert center card between left and right
+      tripleContainer.insertBefore(centerCard, rightCard);
+      
       tripleOverlay.classList.add('active');
       revealWrapper.classList.add('active');
       
@@ -491,12 +552,8 @@
       window.scrollTo({ top: targetY, behavior: 'smooth' });
       
       setTimeout(() => {
-        const leftCard = sceneDiv.querySelector('#leftCard');
-        const centerCard = sceneDiv.querySelector('#centerCard');
-        const rightCard = sceneDiv.querySelector('#rightCard');
         const closeBtn = sceneDiv.querySelector('#closeRevealBtn');
         const swipeIndicator = sceneDiv.querySelector('#swipeIndicator');
-        const tripleContainer = sceneDiv.querySelector('#tripleContainer');
         
         leftCard.classList.add('active');
         centerCard.classList.add('active');
@@ -512,13 +569,10 @@
         
         if (isMobileDevice && tripleContainer) {
           setTimeout(() => {
-            const centerCardEl = tripleContainer.querySelector('#centerCard');
-            if (centerCardEl) {
-              const containerRect = tripleContainer.getBoundingClientRect();
-              const cardRect = centerCardEl.getBoundingClientRect();
-              const scrollPosition = cardRect.left - containerRect.left + tripleContainer.scrollLeft - (containerRect.width / 2) + (cardRect.width / 2);
-              tripleContainer.scrollTo({ left: scrollPosition, behavior: 'smooth' });
-            }
+            const containerRect = tripleContainer.getBoundingClientRect();
+            const cardRect = centerCard.getBoundingClientRect();
+            const scrollPosition = cardRect.left - containerRect.left + tripleContainer.scrollLeft - (containerRect.width / 2) + (cardRect.width / 2);
+            tripleContainer.scrollTo({ left: scrollPosition, behavior: 'smooth' });
           }, 400);
         }
         if (swipeIndicator) setTimeout(() => swipeIndicator.classList.remove('visible'), 4500);
@@ -552,11 +606,20 @@
 
     new Swiper('.socialSwiper', { slidesPerView: 'auto', spaceBetween: 24, loop: true, autoplay: { delay: 0, disableOnInteraction: false }, speed: 3000, freeMode: true });
 
-    // Video modal
+    // Video modal with fallback
     const videoModalEl = document.getElementById('videoModal');
     const modalVideo = document.getElementById('modalVideo');
     document.querySelectorAll('.reel-thumb').forEach(thumb => {
-      thumb.addEventListener('click', () => { modalVideo.src = thumb.getAttribute('data-video'); videoModalEl.classList.add('active'); modalVideo.play(); });
+      thumb.addEventListener('click', () => { 
+        const videoUrl = thumb.getAttribute('data-video');
+        modalVideo.src = videoUrl;
+        modalVideo.onerror = function() {
+          const fallbackImg = thumb.getAttribute('data-fallback');
+          modalVideo.poster = fallbackImg;
+        };
+        videoModalEl.classList.add('active'); 
+        modalVideo.play().catch(e => console.log('Video play failed:', e));
+      });
     });
     document.getElementById('closeVideo').addEventListener('click', () => { videoModalEl.classList.remove('active'); modalVideo.pause(); modalVideo.src = ''; });
     videoModalEl.addEventListener('click', (e) => { if(e.target === videoModalEl) { videoModalEl.classList.remove('active'); modalVideo.pause(); modalVideo.src = ''; } });

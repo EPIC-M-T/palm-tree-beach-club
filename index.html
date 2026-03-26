@@ -25,7 +25,6 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Inter', sans-serif; background-color: #0a0c0f; overflow-x: hidden; scroll-behavior: smooth; }
     .glass-panel { background: rgba(10, 12, 15, 0.65); backdrop-filter: blur(12px); border: 1px solid rgba(212, 175, 55, 0.25); border-radius: 2rem; box-shadow: 0 20px 40px -12px rgba(0,0,0,0.5), 0 0 0 0.5px rgba(212, 175, 55, 0.2) inset; }
-    .gold-glow { text-shadow: 0 0 20px rgba(212, 175, 55, 0.8), 0 0 40px rgba(212, 175, 55, 0.4); }
     .btn-gold { background: linear-gradient(135deg, #d4af37 0%, #b88b2c 100%); box-shadow: 0 4px 15px rgba(212,175,55,0.3); transition: all 0.3s ease; }
     .btn-gold:hover { transform: scale(1.02); box-shadow: 0 8px 25px rgba(212,175,55,0.5); }
     /* 3D Flip Card */
@@ -184,7 +183,7 @@
     .triple-container.mobile-scrollable::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 10px; }
     .triple-container.mobile-scrollable::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 10px; }
     .triple-container:not(.mobile-scrollable) { justify-content: center; }
-    /* Hero Video - Responsive */
+    /* Hero Video */
     .heroBg{
       position: absolute;
       inset: 0;
@@ -206,48 +205,69 @@
     .heroVignette{
       position: absolute;
       inset: 0;
-      background: radial-gradient(800px 600px at 50% 35%, rgba(0,0,0,.10), rgba(0,0,0,.55));
-      opacity: 0.7;
+      background: radial-gradient(800px 600px at 50% 35%, rgba(0,0,0,.10), rgba(0,0,0,.45));
+      opacity: 0.5;
     }
-    /* CINEMATIC HERO TYPOGRAPHY - ENHANCED WITH BLACK OUTLINE */
-    .hero-title-main {
-      font-family: 'Playfair Display', serif;
-      font-weight: 800;
-      letter-spacing: -0.02em;
+    /* Logo containers */
+    .hero-logo-top-left {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      z-index: 30;
+      width: 140px;
+      transition: all 0.3s ease;
     }
-    .hero-title-white {
-      color: white;
-      text-shadow: 
-        0 2px 10px rgba(0,0,0,0.9),
-        0 4px 20px rgba(0,0,0,0.7),
-        0 8px 40px rgba(0,0,0,0.5),
-        -1px -1px 0 rgba(0,0,0,0.3),
-        1px -1px 0 rgba(0,0,0,0.3),
-        -1px 1px 0 rgba(0,0,0,0.3),
-        1px 1px 0 rgba(0,0,0,0.3);
+    .hero-logo-top-right {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      z-index: 30;
+      width: 180px;
+      transition: all 0.3s ease;
     }
-    .hero-title-gold {
-      color: #d4af37;
-      text-shadow: 
-        0 2px 10px rgba(0,0,0,0.9),
-        0 4px 20px rgba(0,0,0,0.7),
-        0 8px 40px rgba(0,0,0,0.5),
-        0 0 0 2px rgba(0,0,0,0.8),
-        0 0 0 4px rgba(0,0,0,0.4),
-        0 0 20px rgba(212,175,55,0.5);
+    @media (max-width: 768px) {
+      .heroVidDesktop { display: none; }
+      .heroVidMobile { display: block; }
+      .hero-logo-top-left { width: 100px; top: 20px; left: 20px; }
+      .hero-logo-top-right { width: 130px; top: 20px; right: 20px; }
     }
-    .hero-subtitle {
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      text-shadow: 
-        0 2px 12px rgba(0,0,0,0.9),
-        0 4px 25px rgba(0,0,0,0.7),
-        0 0 10px rgba(0,0,0,0.6);
-      backdrop-filter: blur(3px);
-      background: rgba(0,0,0,0.25);
-      display: inline-block;
+    /* Summer Pool Party Section */
+    .summer-section {
+      background: linear-gradient(135deg, #0a2b2e 0%, #0f3b32 50%, #1a4a3a 100%);
+      position: relative;
+      overflow: hidden;
     }
-    /* Click instruction text - responsive */
+    .summer-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c4bd467794bf84382f1a99.png') repeat;
+      background-size: 60px;
+      opacity: 0.08;
+      pointer-events: none;
+      animation: floatPalm 20s linear infinite;
+    }
+    @keyframes floatPalm {
+      0% { background-position: 0 0; }
+      100% { background-position: 200px 200px; }
+    }
+    .pool-particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: rgba(212,175,55,0.4);
+      border-radius: 50%;
+      animation: particleFloat 8s ease-in-out infinite;
+    }
+    @keyframes particleFloat {
+      0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+      20% { opacity: 0.8; }
+      80% { opacity: 0.5; }
+      100% { transform: translateY(-100px) translateX(30px); opacity: 0; }
+    }
     .click-instruction {
       font-family: 'Inter', sans-serif;
       font-size: 0.9rem;
@@ -274,14 +294,7 @@
       display: none;
     }
     @media (max-width: 768px) {
-      .heroVidDesktop { display: none; }
-      .heroVidMobile { display: block; }
-      .hero-title-white, .hero-title-gold { font-size: 3rem !important; letter-spacing: -0.01em; }
-      .hero-title-gold { text-shadow: 0 2px 8px rgba(0,0,0,0.9), 0 4px 20px rgba(0,0,0,0.7), 0 0 0 2px rgba(0,0,0,0.6); }
-      .hero-subtitle { font-size: 1.25rem !important; backdrop-filter: blur(4px); background: rgba(0,0,0,0.35); }
-      /* Hide desktop version on mobile */
       .click-instruction-desktop { display: none; }
-      /* Show stacked mobile version */
       .click-instruction-mobile { 
         display: flex; 
         flex-direction: column;
@@ -326,12 +339,7 @@
         stroke-width: 1.5;
       }
     }
-    @media (max-width: 480px) {
-      .click-instruction-mobile .main-text { font-size: 0.65rem; }
-      .click-instruction-mobile .bullet-item { font-size: 0.6rem; }
-    }
     .swiper-slide { transition: transform 0.3s ease; }
-    .social-swiper .swiper-wrapper { transition-timing-function: linear; }
     .video-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(12px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
     .video-modal.active { opacity: 1; visibility: visible; }
     ::-webkit-scrollbar { width: 6px; }
@@ -384,26 +392,68 @@
     <lottie-player src="https://assets9.lottiefiles.com/packages/lf20_hd7abqpu.json" background="transparent" speed="0.6" loop autoplay></lottie-player>
   </div>
 
-  <!-- HERO with Responsive Videos + Enhanced Cinematic Text Shadows + Black Outline -->
+  <!-- HERO with Logos -->
   <section class="relative h-screen w-full overflow-hidden">
     <div class="heroBg">
       <video class="heroVidDesktop" autoplay muted loop playsinline preload="auto">
-        <source src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2dfc0fe4d0d5db8cf41c8.mp4" type="video/mp4">
+        <source src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c4b72c57fb3b1486105157.mp4" type="video/mp4">
       </video>
       <video class="heroVidMobile" autoplay muted loop playsinline preload="auto">
-        <source src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2e38f5108034f24d3a7ff.mp4" type="video/mp4">
+        <source src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c4b72c421e24eb2e623353.mp4" type="video/mp4">
       </video>
       <div class="heroVignette"></div>
     </div>
-    <div class="relative z-20 flex flex-col items-center justify-center h-full text-center px-4">
-      <img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687edb257f24c671f43bb1cb.png" alt="EPIC Models Logo" class="w-56 md:w-80 mb-6 drop-shadow-2xl opacity-0 transform -translate-y-10" id="heroLogo">
-      <h1 id="heroHeadline" class="hero-title-main text-5xl md:text-8xl lg:text-9xl font-bold tracking-tight opacity-0">
-        <span class="hero-title-white">EPIC meets</span><br>
-        <span class="hero-title-gold gold-glow">Palm Tree Beach Club</span>
-      </h1>
-      <p class="hero-subtitle text-xl md:text-3xl max-w-3xl mt-6 text-white/95 px-6 py-3 rounded-full opacity-0 font-semibold tracking-wide" id="heroSub">The ultimate poolside alliance • Summer Wed–Sun • Book the icons</p>
-      <div class="mt-10 flex gap-5 opacity-0" id="heroBtn"><a href="#talent" class="btn-gold px-10 py-4 rounded-full font-bold text-black tracking-wide text-lg shadow-2xl hover:shadow-amber-500/50 transition-all">Discover Talent</a></div>
+    <!-- Logos -->
+    <img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/687edb257f24c671f43bb1cb.png" alt="EPIC Models" class="hero-logo-top-left">
+    <img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c4b89f421e24edac625d15.png" alt="Palm Tree Beach Club" class="hero-logo-top-right">
+  </section>
+
+  <!-- Summer Pool Party Section -->
+  <section class="summer-section py-20 px-4 relative overflow-hidden">
+    <!-- Animated particles -->
+    <div id="particleContainer"></div>
+    
+    <div class="max-w-5xl mx-auto text-center relative z-10">
+      <div class="mb-8 animate-bounce-slow">
+        <img src="https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c4bd467794bf84382f1a99.png" alt="Palm Tree" class="w-20 h-20 mx-auto mb-4 filter drop-shadow-glow">
+      </div>
+      
+      <h2 class="text-4xl md:text-6xl lg:text-7xl font-['Playfair_Display'] font-bold text-white mb-6 opacity-0" id="summerHeadline">
+        The Ultimate Poolside Alliance
+      </h2>
+      
+      <div class="flex flex-wrap items-center justify-center gap-3 mb-8">
+        <span class="inline-block bg-amber-500/20 backdrop-blur-sm px-5 py-2 rounded-full text-amber-300 font-semibold text-sm md:text-base">SUMMER</span>
+        <span class="text-amber-400 text-xl font-bold">✦</span>
+        <span class="inline-block bg-amber-500/20 backdrop-blur-sm px-5 py-2 rounded-full text-amber-300 font-semibold text-sm md:text-base">WED–SUN</span>
+        <span class="text-amber-400 text-xl font-bold">✦</span>
+        <span class="inline-block bg-amber-500/20 backdrop-blur-sm px-5 py-2 rounded-full text-amber-300 font-semibold text-sm md:text-base">BOOK THE ICONS</span>
+      </div>
+      
+      <p class="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed opacity-0" id="summerText">
+        Experience the ultimate fusion of luxury, energy, and tropical paradise. 
+        Palm Tree Beach Club brings the heat with EPIC's elite talent roster — 
+        where every weekend feels like a summer vacation.
+      </p>
+      
+      <div class="mt-10 flex justify-center gap-4 opacity-0" id="summerBtn">
+        <a href="#talent" class="btn-gold px-8 py-3 rounded-full font-bold text-black tracking-wide hover:scale-105 transition-all">Explore Talent</a>
+        <a href="#contact" class="border border-amber-500 px-8 py-3 rounded-full font-bold text-amber-400 tracking-wide hover:bg-amber-500/10 transition-all">Book Now</a>
+      </div>
     </div>
+    
+    <style>
+      @keyframes bounce-slow {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
+      .animate-bounce-slow {
+        animation: bounce-slow 3s ease-in-out infinite;
+      }
+      .drop-shadow-glow {
+        filter: drop-shadow(0 0 15px rgba(212,175,55,0.5));
+      }
+    </style>
   </section>
 
   <!-- ELITE AMBASSADORS -->
@@ -480,13 +530,30 @@
   <script>
     // Model Data
     const modelsData = [
-      { name: "Zoe", tagline: "Lifestyle & Brand Ambassador | Polished, Engaging Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a139e309faa8697d2d.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906c1ff455ee6.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2d8c2eaed068cf0a0b66b.mp4", bio: "Zoe is a lifestyle model and brand ambassador known for her polished look, approachable energy, and strong on-camera presence. She brings a balance of professionalism and personality to every event, making her a great fit for both upscale brand activations and high-energy environments.", specialties: ["Lifestyle", "Brand Activations", "Swimwear", "Trade Shows & Events"], strengths: ["Approachable", "Engaging", "Reliable", "Photogenic"], insta: "@ZoeLizGordon" },
-      { name: "Valeria", tagline: "Lifestyle & Swimwear Model | Elegant, High-Energy Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906f935455eec.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bcab3c84075.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8ffd37d104780da819.mp4", bio: "Valeria is a lifestyle and swimwear model known for her striking look, confident presence, and natural on-camera appeal. She brings a balance of elegance and energy to every event, making her a strong fit for both upscale brand activations and high-volume daylife environments.", specialties: ["Swimwear", "Lifestyle", "Brand Activations", "Dayclubs"], strengths: ["Confident presence", "Guest engagement", "Photogenic", "Reliable"], insta: "@ValeriaPuebela" },
-      { name: "Ki", tagline: "Fitness-Driven Brand Ambassador | High-Energy Event Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bbd40c84074.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a175ee05203568fc21.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2dbe339e30902466cfe28.mp4", bio: "Ki is a fitness-focused model and brand ambassador known for her strong, athletic look and confident presence. With a background in health and wellness, she brings high energy, professionalism, and engaging guest interaction to every event.", specialties: ["Fitness", "Swimwear", "Brand Activations", "Dayclubs"], strengths: ["High energy", "Guest interaction", "Reliable", "On-camera ready"], insta: "@kithebody" },
-      { name: "Julie", tagline: "Glamour & Lifestyle Model | Magnetic, High-Energy Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a125d18244526379c7.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a1fe4d0d0bdecae21b.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c9dbf5a38957c89ae0e4.mp4", bio: "Julietica is a glamour and lifestyle model known for her striking look, confident energy, and strong visual presence. She brings a bold yet polished vibe to every event, making her an ideal fit for high-energy dayclubs, nightlife activations, and premium brand experiences.", specialties: ["Glamour", "Lifestyle", "Swimwear", "Dayclubs & Nightlife"], strengths: ["High energy", "Confident presence", "Guest engagement", "Photogenic"], insta: "@Julietica13" },
-      { name: "Monique", tagline: "Fitness & Glamour Model | Bold, High-Impact Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a14d943d13bb8cc959.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a1f5a3892c549a49d4.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8f1a6adab44165877d.mp4", bio: "Monique is a fitness and glamour model known for her sculpted physique, confident energy, and commanding visual presence. She brings a bold, high-impact vibe to every event, making her an ideal fit for fitness activations, nightlife experiences, and premium brand promotions.", specialties: ["Fitness", "Glamour", "Swimwear", "Brand Activations", "Nightlife"], strengths: ["Confident presence", "High energy", "Photogenic", "Guest engagement"], insta: "@Fitlife.by.mony" },
-      { name: "Mica", tagline: "Glamour & Lifestyle Model | Elegant, High-Impact Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b9063a85455ee7.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a181b374defcadedba.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8fcf4f9a4b4c0e67ee.mp4", bio: "Micaela is a glamour and lifestyle model known for her striking features, poised presence, and natural on-camera confidence. She brings an elevated, sophisticated energy to every event, making her an excellent fit for luxury brand activations, upscale venues, and high-profile experiences.", specialties: ["Glamour", "Lifestyle", "Swimwear", "Luxury Brand Activations"], strengths: ["Elegant presence", "Photogenic", "Professional", "Engaging"], insta: "@Micaelabaguear" }
+      { name: "Zoe", tagline: "Lifestyle & Brand Ambassador | Polished, Engaging Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a139e309faa8697d2d.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906c1ff455ee6.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2d8c2eaed068cf0a0b66b.mp4", bio: "Zoe is a lifestyle model and brand ambassador known for her polished look, approachable energy, and strong on-camera presence.", specialties: ["Lifestyle", "Brand Activations", "Swimwear", "Trade Shows & Events"], strengths: ["Approachable", "Engaging", "Reliable", "Photogenic"], insta: "@ZoeLizGordon" },
+      { name: "Valeria", tagline: "Lifestyle & Swimwear Model | Elegant, High-Energy Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b906f935455eec.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bcab3c84075.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8ffd37d104780da819.mp4", bio: "Valeria is a lifestyle and swimwear model known for her striking look, confident presence, and natural on-camera appeal.", specialties: ["Swimwear", "Lifestyle", "Brand Activations", "Dayclubs"], strengths: ["Confident presence", "Guest engagement", "Photogenic", "Reliable"], insta: "@ValeriaPuebela" },
+      { name: "Ki", tagline: "Fitness-Driven Brand Ambassador | High-Energy Event Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a17fba4bbd40c84074.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a175ee05203568fc21.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2dbe339e30902466cfe28.mp4", bio: "Ki is a fitness-focused model and brand ambassador known for her strong, athletic look and confident presence.", specialties: ["Fitness", "Swimwear", "Brand Activations", "Dayclubs"], strengths: ["High energy", "Guest interaction", "Reliable", "On-camera ready"], insta: "@kithebody" },
+      { name: "Julie", tagline: "Glamour & Lifestyle Model | Magnetic, High-Energy Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a125d18244526379c7.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a1fe4d0d0bdecae21b.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c9dbf5a38957c89ae0e4.mp4", bio: "Julietica is a glamour and lifestyle model known for her striking look, confident energy, and strong visual presence.", specialties: ["Glamour", "Lifestyle", "Swimwear", "Dayclubs & Nightlife"], strengths: ["High energy", "Confident presence", "Guest engagement", "Photogenic"], insta: "@Julietica13" },
+      { name: "Monique", tagline: "Fitness & Glamour Model | Bold, High-Impact Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a14d943d13bb8cc959.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a1f5a3892c549a49d4.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8f1a6adab44165877d.mp4", bio: "Monique is a fitness and glamour model known for her sculpted physique, confident energy, and commanding visual presence.", specialties: ["Fitness", "Glamour", "Swimwear", "Brand Activations", "Nightlife"], strengths: ["Confident presence", "High energy", "Photogenic", "Guest engagement"], insta: "@Fitlife.by.mony" },
+      { name: "Mica", tagline: "Glamour & Lifestyle Model | Elegant, High-Impact Presence", headshot: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a121b9063a85455ee7.png", fullBody: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2c6a181b374defcadedba.png", videoUrl: "https://assets.cdn.filesafe.space/YzjwmP6zpvDUp28hrM1o/media/69c2db8fcf4f9a4b4c0e67ee.mp4", bio: "Micaela is a glamour and lifestyle model known for her striking features, poised presence, and natural on-camera confidence.", specialties: ["Glamour", "Lifestyle", "Swimwear", "Luxury Brand Activations"], strengths: ["Elegant presence", "Photogenic", "Professional", "Engaging"], insta: "@Micaelabaguear" }
     ];
+
+    // Create floating particles
+    function createParticles() {
+      const container = document.getElementById('particleContainer');
+      for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'pool-particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.bottom = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 5 + 's';
+        particle.style.animationDuration = 6 + Math.random() * 4 + 's';
+        particle.style.width = Math.random() * 8 + 2 + 'px';
+        particle.style.height = particle.style.width;
+        container.appendChild(particle);
+      }
+    }
+    createParticles();
 
     const wrapper = document.getElementById('talentSwiperWrapper');
     modelsData.forEach((model, idx) => {
@@ -542,11 +609,12 @@
     closeModalBtn.addEventListener('click', closeModal); contactModal.addEventListener('click', (e) => { if(e.target === contactModal) closeModal(); });
     tripleOverlay.addEventListener('click', closeTripleReveal);
     gsap.registerPlugin(ScrollTrigger);
-    gsap.to("#heroLogo", { opacity: 1, y: 0, duration: 1 });
-    gsap.to("#heroHeadline", { opacity: 1, y: 0, duration: 1, delay: 0.2 });
-    gsap.to("#heroSub", { opacity: 1, y: 0, duration: 1, delay: 0.4 });
-    gsap.to("#heroBtn", { opacity: 1, y: 0, duration: 0.8, delay: 0.6 });
-    ScrollTrigger.create({ trigger: "section", start: "top top", end: "bottom top", scrub: 1, onUpdate: (self) => { const video = document.querySelector(".heroVidDesktop, .heroVidMobile"); if(video) video.style.transform = `scale(${1 + self.progress * 0.08})`; } });
+    
+    // Animate summer section
+    gsap.to("#summerHeadline", { opacity: 1, y: 0, duration: 1, scrollTrigger: { trigger: ".summer-section", start: "top 80%" } });
+    gsap.to("#summerText", { opacity: 1, y: 0, duration: 1, delay: 0.3, scrollTrigger: { trigger: ".summer-section", start: "top 80%" } });
+    gsap.to("#summerBtn", { opacity: 1, y: 0, duration: 1, delay: 0.6, scrollTrigger: { trigger: ".summer-section", start: "top 80%" } });
+    
     gsap.utils.toArray('#talent, .py-24, .py-20').forEach(section => { gsap.from(section, { scrollTrigger: { trigger: section, start: "top 85%" }, opacity: 0, y: 50, duration: 1.2 }); });
   </script>
 </body>
